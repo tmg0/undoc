@@ -1,42 +1,22 @@
-# Nuxt 3 Minimal Starter
+# Undoc
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[![NPM version](https://img.shields.io/npm/v/undoc)](https://www.npmjs.com/package/undoc)
+
+A smart document generator for used methods in project.
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
+pnpm add undoc -g
 ```
 
-## Development Server
-
-Start the development server on http://localhost:3000
+Start server
 
 ```bash
-npm run dev
+undoc
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## License
+[MIT](./LICENSE)
