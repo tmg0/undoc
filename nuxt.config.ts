@@ -4,5 +4,5 @@ export default defineNuxtConfig({
   extends: '@nuxt-themes/typography',
   modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@pinia/nuxt'],
   imports: { dirs: ['./stores'] },
-  pinia: { autoImports: ['defineStore', 'storeToRefs'] }
+  pinia: { autoImports: ['defineStore'] }
 })

@@ -1,0 +1,9 @@
+{
+  "vue": {
+    "repo": "https://github.com/vuejs/docs.git",
+    "branch": "main",
+    "exports": {
+      "createApp": "/src/api/application.md"
+    }
+  }
+}

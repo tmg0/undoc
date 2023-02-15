@@ -3,6 +3,8 @@ const store = useLibs()
 
 const { data } = await useFetch('/api/package-json')
 
+console.log(data)
+
 data.value && store.parsePackageJSON(data.value)
 </script>
 

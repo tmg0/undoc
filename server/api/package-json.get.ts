@@ -1,16 +1,10 @@
+import fs from 'node:fs'
+import { resolvePath } from 'mlly'
 
-export default defineEventHandler(() => {
-  return {
-    devDependencies: {
-      '@nuxt-themes/typography': '^0.8.0',
-      '@nuxtjs/eslint-config-typescript': '^12.0.0',
-      '@nuxtjs/tailwindcss': '^6.4.0',
-      '@pinia/nuxt': '^0.4.6',
-      '@types/node': '^18.13.0',
-      '@vueuse/nuxt': '^9.12.0',
-      eslint: '^8.34.0',
-      nuxt: '^3.2.0',
-      typescript: '^4.9.5'
-    }
-  }
+export default defineEventHandler(async () => {
+  try {
+    const path = await resolvePath('./package.json', { url: process.cwd() })
+    const json = await fs.readFileSync(path).toString()
+    return JSON.parse(json)
+  } catch (error) { return { error } }
 })
