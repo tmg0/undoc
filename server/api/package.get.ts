@@ -12,10 +12,15 @@ const processExec = (cmd: string): Promise<string> => {
   })
 }
 
+const parseVersions = async (query: any) => {
+  const stdout = await processExec(`npm view ${query.lib} versions --json`)
+  return JSON.parse(stdout)
+}
+
 export default defineEventHandler(async (event) => {
   try {
     const query = getQuery(event)
-    const out = await processExec(`npm view ${query.lib} versions`)
-    return out.slice(2, -2).split(',\n ')
+    const [versions] = await Promise.all([parseVersions(query)])
+    return { versions }
   } catch (error) { return { error } }
 })
