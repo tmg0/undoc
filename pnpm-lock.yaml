@@ -4,6 +4,7 @@ specifiers:
   '@nuxt-themes/typography': ^0.8.0
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@nuxtjs/tailwindcss': ^6.4.0
+  '@pinia/nuxt': ^0.4.6
   '@types/node': ^18.13.0
   '@vueuse/nuxt': ^9.12.0
   eslint: ^8.34.0
@@ -14,6 +15,7 @@ devDependencies:
   '@nuxt-themes/typography': 0.8.0
   '@nuxtjs/eslint-config-typescript': 12.0.0_7kw3g6rralp5ps6mg3uyzz6azm
   '@nuxtjs/tailwindcss': 6.4.0
+  '@pinia/nuxt': 0.4.6_typescript@4.9.5
   '@types/node': 18.13.0
   '@vueuse/nuxt': 9.12.0_nuxt@3.2.0
   eslint: 8.34.0
@@ -1237,6 +1239,19 @@ packages:
       - supports-color
       - ts-node
       - webpack
+    dev: true
+
+  /@pinia/nuxt/0.4.6_typescript@4.9.5:
+    resolution: {integrity: sha512-HjrYEfLdFpmsjhicPJgL36jVhzHWukIQPFFHGTSF84Cplu+f2nY2XHKqe9ToHzE9rLee2RjLOwAzOnXa/I/u6A==}
+    dependencies:
+      '@nuxt/kit': 3.2.0
+      pinia: 2.0.30_typescript@4.9.5
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - rollup
+      - supports-color
+      - typescript
+      - vue
     dev: true
 
   /@pkgr/utils/2.3.1:
@@ -5704,6 +5719,23 @@ packages:
       - postcss
       - sass
       - supports-color
+    dev: true
+
+  /pinia/2.0.30_typescript@4.9.5:
+    resolution: {integrity: sha512-q6DUmxWwe/mQgg+55QQjykpKC+aGeGdaJV3niminl19V08dE+LRTvSEuqi6/NLSGCKHI49KGL6tMNEOssFiMyA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      typescript: 4.9.5
+      vue-demi: 0.13.11
     dev: true
 
   /pkg-types/1.0.1:
