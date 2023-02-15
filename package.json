@@ -5,6 +5,7 @@
     "undoc": ".output/server/index.mjs"
   },
   "files": [
+    "undoc.config.json",
     ".output"
   ],
   "workspaces": [

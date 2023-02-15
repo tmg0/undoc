@@ -5,5 +5,9 @@
     "exports": {
       "createApp": "/src/api/application.md"
     }
+  },
+  "typescript": {
+    "link": "https://www.typescriptlang.org/docs/",
+    "exports": {}
   }
 }

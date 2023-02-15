@@ -1,3 +1,5 @@
+import undocConfig from '~~/undoc.config.json'
+
 export interface Lib {
   name: string
   version: string
@@ -9,10 +11,17 @@ export interface PackageJSON extends Record<string, any> {
   [key: string]: string | number | string[] | Record<string, string> | undefined
 }
 
+export interface LibsState {
+  count: number
+  libs: Lib[]
+  lib?: UndocConfigRecord & { name: string }
+}
+
 export const useLibs = defineStore('lib', {
-  state: () => ({
+  state: (): LibsState => ({
     count: 0,
-    libs: [] as Lib[]
+    lib: undefined,
+    libs: []
   }),
 
   actions: {
@@ -23,6 +32,10 @@ export const useLibs = defineStore('lib', {
 
       this.libs = libs
       this.count = libs.length
+    },
+
+    selectLib (name: string) {
+      this.lib = { name, ...(undocConfig as UndocConfig)[name] }
     }
   }
 })
