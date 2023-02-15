@@ -17,7 +17,7 @@ const isRepo = computed(() => store.lib?.repo)
 
 <template>
   <div class="flex flex-col h-full">
-    <div class="bg-gray-100/80 h-1/3 border-b border-gray-300/80 overflow-auto">
+    <div class="bg-gray-100/80 h-1/3 border-b border-gray-300/80 overflow-y-auto">
       <div>{{ pending }}</div>
 
       {{ versions }}
