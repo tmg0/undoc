@@ -1,9 +1,5 @@
 <script setup lang="ts">
 const store = useLibs()
-
-const { data } = await useFetch('/api/package-json')
-
-data.value && store.parsePackageJSON(data.value)
 </script>
 
 <template>

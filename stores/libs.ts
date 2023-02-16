@@ -1,11 +1,5 @@
 import undocConfig from '~~/undoc.config.json'
 
-export interface Lib {
-  name: string
-  version: string
-  npm?: Partial<ViewPackage>
-}
-
 export interface PackageJSON extends Record<string, any> {
   dependencies?: Record<string, string>
   devDependencies?: Record<string, string>
@@ -15,7 +9,7 @@ export interface PackageJSON extends Record<string, any> {
 export interface LibsState {
   count: number
   libs: Record<string, Lib>
-  lib?: UndocConfigRecord & { name: string }
+  lib?: UndocConfigRecord & Lib
 }
 
 export const useLibs = defineStore('lib', {
@@ -28,7 +22,7 @@ export const useLibs = defineStore('lib', {
   actions: {
     parsePackageJSON (json: PackageJSON) {
       const libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => ({
-        name, version
+        name, version, used: []
       }))
 
       this.libs = libs
@@ -36,11 +30,18 @@ export const useLibs = defineStore('lib', {
     },
 
     selectLib (name: string) {
-      this.lib = { name, ...(undocConfig as UndocConfig)[name] }
+      this.libs[name].conf = { ...(undocConfig as UndocConfig)[name] }
+      this.lib = { ...this.libs[name] }
     },
 
     cacheLib (name: string, npm: Partial<ViewPackage>) {
       this.libs[name].npm = npm
+    },
+
+    cacheUsed (used: Record<string, string[]>) {
+      for (const name in this.libs) {
+        this.libs[name].used = used[name] || []
+      }
     }
   }
 })

@@ -1,3 +1,15 @@
+<script setup lang="ts">
+const store = useLibs()
+
+const { data: json } = await useFetch('/api/package-json')
+
+json.value && store.parsePackageJSON(json.value)
+
+const { data: used, error } = await useFetch('/api/used-apis')
+
+if (!error.value && used.value) { store.cacheUsed(used.value as Record<string, string[]>) }
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtPage />
