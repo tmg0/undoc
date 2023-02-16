@@ -12,7 +12,7 @@ data.value && store.parsePackageJSON(data.value)
 
     <div class="flex-1 px-4 py-3 overflow-y-auto">
       <div
-        v-for="({ name, version }) in store.libs"
+        v-for="({ name, version }) in Object.values(store.libs) "
         :key="name"
         class="flex items-center justify-between cursor-pointer"
         @click="store.selectLib(name)"

@@ -6,10 +6,16 @@ const pending = ref(false)
 
 watch(() => store.lib, async (value) => {
   if (value?.name) {
-    pending.value = true
-    const { data } = await useFetch('/api/package', { query: { lib: store.lib?.name } })
-    lib.value = data.value
-    pending.value = false
+    lib.value = store.libs[value.name]?.npm || {}
+
+    if (!store.libs[value.name]?.npm) {
+      pending.value = true
+      const { data } = await useFetch('/api/package', { query: { lib: store.lib?.name } })
+      lib.value = data.value
+      pending.value = false
+
+      store.cacheLib(value.name, data.value)
+    }
   }
 }, { immediate: true })
 
