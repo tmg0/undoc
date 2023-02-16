@@ -38,7 +38,7 @@ watch(() => store.lib, async (value) => {
     </div>
 
     <div class="flex-1">
-      <iframe :src="store.lib?.link" frameborder="0" class="w-full h-full" />
+      <iframe :src="store.lib?.conf?.link || store.lib?.npm?.homepage" frameborder="0" class="w-full h-full" />
     </div>
   </div>
 </template>
