@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 
 const store = useLibs()
 const lib = ref<Partial<ViewPackage>>({})
@@ -18,20 +18,19 @@ const isRepo = computed(() => store.lib?.repo)
 
 <template>
   <div class="flex flex-col h-full">
-    <div class="bg-gray-100/80 h-1/4 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4">
-      <div>name: {{ lib.name }}</div>
+    <div class="bg-gray-100/80 h-1/4 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4 px-4 py-3 ">
+      <PackageFieldItem label="Name" :value="lib.name" />
+      <PackageFieldItem label="Author" :value="lib.author" />
 
-      <div>author: {{ lib.author }}</div>
+      <PackageFieldItem label="Engines">
+        <div v-for="([key, value]) in Object.entries((lib.engines) || {})" :key="key" class="text-gray-500/50 text-sm">
+          {{ key + value }}
+        </div>
+      </PackageFieldItem>
 
-      <div>engines: {{ lib.engines?.node }}</div>
-
-      <div>homepage: {{ lib.homepage }}</div>
-
-      <div>license: {{ lib.license }}</div>
-
-      <div :title="lib.repository?.url" class="truncate">
-        repository: {{ lib.repository?.url }}
-      </div>
+      <PackageFieldItem label="Homepage" :value="lib.homepage" />
+      <PackageFieldItem label="License" :value="lib.license" />
+      <PackageFieldItem label="Repository" :value="lib.repository?.url" />
     </div>
 
     <div class="flex-1">

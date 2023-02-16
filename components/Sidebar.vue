@@ -7,7 +7,7 @@ data.value && store.parsePackageJSON(data.value)
 </script>
 
 <template>
-  <div class="flex flex-col h-full border-r border-gray-300/80" :style="{ width: '256px' }">
+  <div class="flex flex-col h-full border-r border-gray-300/80" :style="{ width: '350px' }">
     <NarBar />
 
     <div class="flex-1 px-4 py-3 overflow-y-auto">

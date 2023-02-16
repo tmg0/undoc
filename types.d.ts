@@ -27,7 +27,5 @@ interface ViewPackage {
   version: string
   versions: string[]
   name: string
-  engines: {
-    node: string
-  }
+  engines: Record<string, string>
 }
