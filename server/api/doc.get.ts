@@ -23,9 +23,7 @@ export default defineEventHandler(async (event) => {
 
     const [owner, repo] = new URL(doc.repo).pathname.split('/').filter(Boolean)
 
-    const filepath = doc.exports ? doc?.exports[query.api] : ''
-
-    if (!filepath) { throw createError('Can not find this api doc repo path.') }
+    const filepath = doc?.exports?.[query.api] || 'README.md'
 
     const md: GithubContent = await $fetch(`https://api.github.com/repos/${owner}/${removeUrlExtension(repo)}/contents/${filepath}?ref=${doc.branch || 'main'}`)
 
