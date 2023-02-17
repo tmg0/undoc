@@ -31,6 +31,7 @@ export const useStore = defineStore('store', {
     },
 
     async selectLib (name: string) {
+      if (name === this.lib?.name) { return }
       if (!this.undocConf) { await this.getUndocConf() }
 
       this.libs[name].conf = { ...this.undocConf?.docs[name] }
