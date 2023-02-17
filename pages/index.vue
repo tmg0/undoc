@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import { micromark } from 'micromark'
 
 const store = useStore()
@@ -21,8 +22,13 @@ const fetchNPM = async () => {
 }
 
 const fetchMD = async () => {
-  if (lib.value.conf?.repo) {
-    md.value = await $fetch('/api/doc', { query: { name: store.lib?.name, api: 'use-fetch' } })
+  if (lib.value.conf?.repo && store.lib?.used.length) {
+    md.value = await $fetch('/api/doc', {
+      query: {
+        name: store.lib?.name,
+        api: store.lib?.used[0]
+      }
+    })
   }
 }
 

@@ -1,5 +1,8 @@
-export interface FindDocDTO {
-  name: string
+import { extname } from 'pathe'
+
+const removeUrlExtension = (url: string) => {
+  const extension = extname(url)
+  return url.replace(new RegExp(extension + '$'), '')
 }
 
 export default defineEventHandler(async (event) => {
@@ -24,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
     if (!filepath) { throw createError('Can not find this api doc repo path.') }
 
-    const md: GithubContent = await $fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filepath}?ref=${doc.branch || 'main'}`)
+    const md: GithubContent = await $fetch(`https://api.github.com/repos/${owner}/${removeUrlExtension(repo)}/contents/${filepath}?ref=${doc.branch || 'main'}`)
 
     const file = Buffer.from(md.content, 'base64')
 

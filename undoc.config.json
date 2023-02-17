@@ -2,21 +2,27 @@
   "git": "https://api.github.com",
   "docs": {
     "vue": {
-      "repo": "https://github.com/vuejs/docs",
+      "repo": "https://github.com/vuejs/docs.git",
       "branch": "main",
       "exports": {
         "createApp": "src/api/application.md"
       }
     },
-    "typescript": {
-      "link": "https://www.typescriptlang.org/docs/",
-      "exports": {}
-    },
     "nuxt": {
-      "repo": "https://github.com/nuxt/nuxt",
+      "repo": "https://github.com/nuxt/nuxt.git",
       "branch":"main",
       "exports": {
-        "use-fetch": "docs/3.api/1.composables/use-fetch.md"
+        "useHead": "docs/3.api/1.composables/use-head.md",
+        "useFetch": "docs/3.api/1.composables/use-fetch.md"
+      }
+    },
+    "vue-router": {
+      "repo": "https://github.com/vuejs/router.git",
+      "branch": "main",
+      "exports": {
+        "onBeforeRouteLeave": "packages/docs/api/index.md",
+        "onBeforeRouteUpdate": "packages/docs/api/index.md",
+        "useLink": "packages/docs/api/index.md"
       }
     }
   }

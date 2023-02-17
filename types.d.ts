@@ -12,7 +12,7 @@ interface UndocConfig {
 
 interface Lib {
   name: string
-  version: string
+  version?: string
   used: string[]
   npm?: Partial<ViewPackage>
   conf?: Partial<UndocDoc>

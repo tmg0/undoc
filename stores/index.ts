@@ -38,9 +38,10 @@ export const useStore = defineStore('lib', {
     },
 
     cacheUsed (used: Record<string, string[]>) {
-      for (const name in this.libs) {
-        this.libs[name].used = used[name] || []
-      }
+      Object.entries(used).forEach(([name, usedAPIs]) => {
+        if (!this.libs[name]) { this.libs[name] = { name, used: [] } }
+        this.libs[name].used = usedAPIs
+      })
     }
   }
 })
