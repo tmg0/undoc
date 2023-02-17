@@ -7,18 +7,18 @@ interface UndocDoc {
 
 interface UndocConfig {
   git: string
-  docs: Record<string, UndocDoc>
+  docs: Record<string, UndocDoc | undefined>
 }
 
 interface Lib {
   name: string
   version?: string
   used: string[]
-  npm?: Partial<ViewPackage>
+  npm?: Partial<NPMView>
   conf?: Partial<UndocDoc>
 }
 
-interface ViewPackage {
+interface NPMView {
   author: string
   bin: {
     tsc: string

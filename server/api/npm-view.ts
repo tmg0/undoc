@@ -13,7 +13,7 @@ const processExec = (cmd: string): Promise<string> => {
 }
 
 const parsePKG = async (query: any) => {
-  const stdout = await processExec(`npm view ${query.lib} --json`)
+  const stdout = await processExec(`npm view ${query.name} --json`)
   return JSON.parse(stdout)
 }
 

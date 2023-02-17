@@ -19,9 +19,10 @@ export const useStore = defineStore('lib', {
 
   actions: {
     parsePackageJSON (json: PackageJSON) {
-      const libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => ({
-        name, version, used: []
-      }))
+      const libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
+        if (name.includes('@types')) { return undefined }
+        return { name, version, used: [] }
+      })
 
       this.libs = libs
       this.count = libs.length
@@ -30,10 +31,10 @@ export const useStore = defineStore('lib', {
     async selectLib (name: string) {
       const { data } = await useFetch('/api/undoc-config')
       this.libs[name].conf = { ...(data.value as UndocConfig).docs[name] }
-      this.lib = { ...this.libs[name] }
+      this.lib = { ...this.lib, ...this.libs[name] }
     },
 
-    cacheLib (name: string, npm: Partial<ViewPackage>) {
+    cacheLib (name: string, npm: Partial<NPMView>) {
       this.libs[name].npm = npm
     },
 

@@ -3,7 +3,8 @@ const useMapValues = <T extends Record<string, any>>(object: T, iteratee: (value
   const result: Record<string, any> = {}
 
   Object.keys(object).forEach((key) => {
-    result[key] = iteratee(object[key], key, object)
+    const value = iteratee(object[key], key, object)
+    if (value) { result[key] = value }
   })
   return result
 }

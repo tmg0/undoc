@@ -4,7 +4,8 @@ import { join, relative } from 'pathe'
 import ignore from 'ignore'
 import g from 'glob'
 
-const excludeFiles = ['.nuxt/imports.d.ts']
+const extraFiles = ['.nuxt/imports.d.ts']
+const excludePrefix = ['@types', '~~', '@@', '~', '@', '..', '.', '/']
 
 const autoImportsAlias: Record<string, string> = { '#app': 'nuxt' }
 
@@ -23,7 +24,7 @@ const getFilesInDirectory = (dirPath = '.') => {
 }
 
 const getAutoImports = () => {
-  return excludeFiles.map((path) => {
+  return extraFiles.map((path) => {
     if (existsSync(path)) {
       return readFileSync(path).toString()
     }
@@ -39,6 +40,9 @@ export default defineEventHandler((event) => {
 
     files.forEach((file) => {
       findStaticImports(file).map(parseStaticImport).forEach(({ specifier, namedImports }) => {
+        if (!specifier) { return }
+        if (excludePrefix.some(pf => specifier?.startsWith(pf))) { return }
+
         if (!result[specifier]) { result[specifier] = [] }
 
         result[specifier] = [...result[specifier], ...Object.keys(namedImports || {})]
@@ -48,6 +52,7 @@ export default defineEventHandler((event) => {
     getAutoImports().forEach((file) => {
       findExports(file).forEach(({ specifier, names, type }) => {
         if (!specifier) { return }
+        if (excludePrefix.some(pf => specifier?.startsWith(pf))) { return }
 
         specifier = autoImportsAlias[specifier] || specifier
 
