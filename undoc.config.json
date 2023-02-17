@@ -27,6 +27,12 @@
     },
     "glob": {
       "repo": "https://github.com/isaacs/node-glob"
+    },
+    "typescript": {
+      "link": "https://www.typescriptlang.org/"
+    },
+    "eslint": {
+      "link": "https://eslint.org"
     }
   }
 }

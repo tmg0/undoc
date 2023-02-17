@@ -6,10 +6,12 @@ const lib = ref<Partial<Lib>>({})
 const pending = ref(false)
 const md = ref('')
 const frameSrc = ref('')
+const repo = ref('')
 
-const hasLink = computed(() => lib.value.conf?.link)
-const iframeSrc = computed(() => hasLink.value || lib.value.npm?.homepage)
 const h5 = computed(() => micromark(md.value))
+
+const hasLink = computed(() => lib.value.conf?.link || '')
+const hasRepo = computed(() => lib.value.conf?.repo || '')
 
 const { data: json } = await useFetch('/api/package-json')
 
@@ -18,39 +20,6 @@ json.value && store.parsePackageJSON(json.value)
 const { data: used, error } = await useFetch('/api/used-apis')
 
 if (!error.value && used.value) { store.cacheUsed(used.value as Record<string, string[]>) }
-
-const beFramed = (url: string): Promise<string> => {
-  try {
-    return new Promise((resolve, reject) => {
-      const iframe = document.createElement('iframe')
-
-      const messageHandler = (event: any) => {
-        if (event.isTrusted) {
-          resolve(url)
-        } else {
-          reject(url)
-        }
-        document.body.removeChild(iframe)
-      }
-
-      window.addEventListener('message', messageHandler, false)
-
-      iframe.src = url
-      iframe.style.display = 'none'
-      document.body.appendChild(iframe)
-    })
-  } catch (error) { return Promise.reject(error) }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const setFrameSrc = async (npmView: Partial<NPMView>) => {
-  const src = lib.value.conf?.link || npmView.homepage
-  if (!src) { return }
-
-  try {
-    frameSrc.value = await beFramed(src)
-  } catch { }
-}
 
 const fetchNPM = async () => {
   if (store.lib?.name && !store.libs[store.lib.name]?.npm) {
@@ -66,21 +35,32 @@ const fetchNPM = async () => {
 }
 
 const fetchMD = async () => {
-  const repo = lib.value.conf?.repo || lib.value.npm?.repository?.url
-  if (repo) {
+  if (repo.value) {
     md.value = await $fetch('/api/doc', {
       query: {
         name: store.lib?.name,
         api: store.lib?.used[0],
-        repo
+        repo: repo.value
       }
     })
   }
 }
 
-watch(() => store.lib, async (value) => {
-  // if (value?.npm) { setFrameSrc(value.npm) }
+const setDocSrc = () => {
+  if (hasLink.value) {
+    frameSrc.value = lib.value.conf?.link || ''
+    return
+  }
 
+  if (hasRepo.value) {
+    repo.value = lib.value.conf?.repo || ''
+    return
+  }
+
+  repo.value = lib.value.npm?.repository?.url || ''
+}
+
+watch(() => store.lib, async (value) => {
   if (value?.name) {
     lib.value = store.libs[value.name] || {}
 
@@ -88,7 +68,9 @@ watch(() => store.lib, async (value) => {
 
     if (!value.repo) { await fetchNPM() }
 
-    if (!hasLink.value) { fetchMD() }
+    setDocSrc()
+
+    fetchMD()
   }
 })
 
@@ -113,7 +95,7 @@ watch(() => store.lib, async (value) => {
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <iframe v-if="frameSrc" :src="iframeSrc" frameborder="0" class="w-full h-full" />
+      <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
       <div v-else class="w-full h-full px-4 py-3 box-border " v-html="h5" />
     </div>
   </div>
