@@ -13,6 +13,8 @@ const h5 = computed(() => micromark(md.value))
 const hasLink = computed(() => lib.value.conf?.link || '')
 const hasRepo = computed(() => lib.value.conf?.repo || '')
 
+store.getUndocConf()
+
 const { data: json } = await useFetch('/api/package-json')
 
 json.value && store.parsePackageJSON(json.value)
@@ -22,13 +24,14 @@ const { data: used, error } = await useFetch('/api/used-apis')
 if (!error.value && used.value) { store.cacheUsed(used.value as Record<string, string[]>) }
 
 const fetchNPM = async () => {
-  if (store.lib?.name && !store.libs[store.lib.name]?.npm) {
+  if (!store.lib) { return }
+
+  if (!store.lib?.npm) {
     pending.value = true
     const npmView = await $fetch('/api/npm-view', { query: { name: store.lib?.name } })
 
     store.cacheLib(store.lib.name, npmView)
-    store.lib.npm = npmView
-    lib.value = store.libs[store.lib.name]
+    lib.value = store.lib
 
     pending.value = false
   }
@@ -61,17 +64,17 @@ const setDocSrc = () => {
 }
 
 watch(() => store.lib, async (value) => {
-  if (value?.name) {
-    lib.value = store.libs[value.name] || {}
+  if (!value) { return }
 
-    if (value.repo) { fetchNPM() }
+  lib.value = store.lib || {}
 
-    if (!value.repo) { await fetchNPM() }
+  if (value.conf?.repo) { fetchNPM() }
 
-    setDocSrc()
+  if (!value.conf?.repo) { await fetchNPM() }
 
-    fetchMD()
-  }
+  setDocSrc()
+
+  fetchMD()
 })
 
 </script>

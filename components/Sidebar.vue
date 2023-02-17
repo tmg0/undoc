@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const store = useStore()
+const { libs, selectLib } = useStore()
 </script>
 
 <template>
@@ -8,10 +8,10 @@ const store = useStore()
 
     <div class="flex-1 px-4 py-3 overflow-y-auto">
       <div
-        v-for="({ name, version }) in Object.values(store.libs) "
+        v-for="({ name, version }) in Object.values(libs) "
         :key="name"
         class="flex items-center justify-between cursor-pointer"
-        @click="store.selectLib(name)"
+        @click="selectLib(name)"
       >
         <span :title="name" class="truncate">{{ name }}</span>
         <span>{{ version }}</span>

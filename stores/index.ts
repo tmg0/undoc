@@ -5,37 +5,41 @@ export interface PackageJSON extends Record<string, any> {
 }
 
 export interface StoreState {
-  count: number
+  undocConf?: UndocConfig
   libs: Record<string, Lib>
-  lib?: UndocDoc & Lib
+  lib?: Lib
 }
 
-export const useStore = defineStore('lib', {
+export const useStore = defineStore('store', {
   state: (): StoreState => ({
-    count: 0,
+    undocConf: undefined,
     lib: undefined,
     libs: {}
   }),
 
   actions: {
+    async getUndocConf () {
+      const data: UndocConfig = await $fetch('/api/undoc-config')
+      this.undocConf = data
+    },
+
     parsePackageJSON (json: PackageJSON) {
-      const libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
+      this.libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
         if (name.includes('@types')) { return undefined }
         return { name, version, used: [] }
       })
-
-      this.libs = libs
-      this.count = libs.length
     },
 
     async selectLib (name: string) {
-      const { data } = await useFetch('/api/undoc-config')
-      this.libs[name].conf = { ...(data.value as UndocConfig).docs[name] }
+      if (!this.undocConf) { await this.getUndocConf() }
+
+      this.libs[name].conf = { ...this.undocConf?.docs[name] }
       this.lib = { ...this.lib, ...this.libs[name] }
     },
 
     cacheLib (name: string, npm: Partial<NPMView>) {
       this.libs[name].npm = npm
+      if (this.lib) { this.lib.npm = npm }
     },
 
     cacheUsed (used: Record<string, string[]>) {
