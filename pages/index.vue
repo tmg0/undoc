@@ -26,7 +26,7 @@ if (!error.value && used.value) { store.cacheUsed(used.value as Record<string, s
 const fetchNPM = async () => {
   if (!store.lib) { return }
 
-  if (!store.lib?.npm) {
+  if (!store.libs[store.lib.name]?.npm) {
     pending.value = true
     const npmView = await $fetch('/api/npm-view', { query: { name: store.lib?.name } })
 
