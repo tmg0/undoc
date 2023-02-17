@@ -1,13 +1,23 @@
 {
-  "vue": {
-    "repo": "https://github.com/vuejs/docs.git",
-    "branch": "main",
-    "exports": {
-      "createApp": "/src/api/application.md"
+  "git": "https://api.github.com",
+  "docs": {
+    "vue": {
+      "repo": "https://github.com/vuejs/docs",
+      "branch": "main",
+      "exports": {
+        "createApp": "src/api/application.md"
+      }
+    },
+    "typescript": {
+      "link": "https://www.typescriptlang.org/docs/",
+      "exports": {}
+    },
+    "nuxt": {
+      "repo": "https://github.com/nuxt/nuxt",
+      "branch":"main",
+      "exports": {
+        "use-fetch": "docs/3.api/1.composables/use-fetch.md"
+      }
     }
-  },
-  "typescript": {
-    "link": "https://www.typescriptlang.org/docs/",
-    "exports": {}
   }
 }

@@ -1,4 +1,4 @@
-interface UndocConfigRecord {
+interface UndocDoc {
   repo?: string
   link?: string
   branch?: string
@@ -6,7 +6,8 @@ interface UndocConfigRecord {
 }
 
 interface UndocConfig {
-  [key: string]: UndocConfigRecord
+  git: string
+  docs: Record<string, UndocDoc>
 }
 
 interface Lib {
@@ -14,7 +15,7 @@ interface Lib {
   version: string
   used: string[]
   npm?: Partial<ViewPackage>
-  conf?: Partial<UndocConfigRecord>
+  conf?: Partial<UndocDoc>
 }
 
 interface ViewPackage {
@@ -36,4 +37,18 @@ interface ViewPackage {
   versions: string[]
   name: string
   engines: Record<string, string>
+}
+
+interface GithubContent {
+  name: string
+  path: string
+  size: number
+  url: string
+  html_url: string
+  git_url: string
+  download_url: string
+  type: boolean
+  content: string
+  encoding: 'base64'
+  _links: Record<string, string>
 }

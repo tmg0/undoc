@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const store = useLibs()
+const store = useStore()
 
 const { data: json } = await useFetch('/api/package-json')
 

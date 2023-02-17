@@ -1,19 +1,17 @@
-import undocConfig from '~~/undoc.config.json'
-
 export interface PackageJSON extends Record<string, any> {
   dependencies?: Record<string, string>
   devDependencies?: Record<string, string>
   [key: string]: string | number | string[] | Record<string, string> | undefined
 }
 
-export interface LibsState {
+export interface StoreState {
   count: number
   libs: Record<string, Lib>
-  lib?: UndocConfigRecord & Lib
+  lib?: UndocDoc & Lib
 }
 
-export const useLibs = defineStore('lib', {
-  state: (): LibsState => ({
+export const useStore = defineStore('lib', {
+  state: (): StoreState => ({
     count: 0,
     lib: undefined,
     libs: {}
@@ -29,8 +27,9 @@ export const useLibs = defineStore('lib', {
       this.count = libs.length
     },
 
-    selectLib (name: string) {
-      this.libs[name].conf = { ...(undocConfig as UndocConfig)[name] }
+    async selectLib (name: string) {
+      const { data } = await useFetch('/api/undoc-config')
+      this.libs[name].conf = { ...(data.value as UndocConfig).docs[name] }
       this.lib = { ...this.libs[name] }
     },
 
