@@ -39,7 +39,7 @@ const fetchNPM = async () => {
 
 const fetchMD = async () => {
   if (repo.value) {
-    md.value = await $fetch('/api/doc', {
+    md.value = await $fetch('/api/repo-doc', {
       query: {
         name: store.lib?.name,
         api: store.lib?.used[0],
