@@ -1,6 +1,7 @@
 interface UndocDoc {
   repo?: string
   link?: string
+  readme?: string
   branch?: string
   exports?: Record<string, string>
 }

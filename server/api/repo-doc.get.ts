@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
     const doc = (conf as UndocConfig).docs[query.name] || {}
 
-    const filepath = (query.api && !Array.isArray(query.api) && doc?.exports?.[query.api]) || 'README.md'
+    const filepath = (query.api && !Array.isArray(query.api) && doc?.exports?.[query.api]) || doc.readme || 'README.md'
 
     const branch = doc.branch || (await getRepoByGithubAPI(owner, repo)).default_branch
 
