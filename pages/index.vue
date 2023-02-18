@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { micromark } from 'micromark'
+import Markdownit from 'markdown-it'
+
+const mdit = new Markdownit()
 
 const store = useStore()
 const lib = ref<Partial<Lib>>({})
@@ -8,7 +10,7 @@ const md = ref('')
 const frameSrc = ref('')
 const repo = ref('')
 
-const h5 = computed(() => micromark(md.value))
+const h5 = computed(() => mdit.render(md.value))
 
 const hasLink = computed(() => lib.value.conf?.link || '')
 const hasRepo = computed(() => lib.value.conf?.repo || '')
@@ -82,19 +84,19 @@ watch(() => store.lib, async (value) => {
 <template>
   <div class="flex flex-col h-full">
     <div class="bg-gray-100/80 h-64 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4 px-4 py-3 flex-shrink-0">
-      <PackageFieldItem label="Name" :value="lib.name" />
-      <PackageFieldItem label="Author" :value="lib.npm?.author" />
+      <NpmFieldItem label="Name" :value="lib.name" />
+      <NpmFieldItem label="Author" :value="lib.npm?.author" />
 
-      <PackageFieldItem label="Engines">
+      <NpmFieldItem label="Engines">
         <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key" class="text-gray-500/50 text-sm">
           {{ key + value }}
         </div>
-      </PackageFieldItem>
+      </NpmFieldItem>
 
-      <PackageFieldItem label="Homepage" :value="lib.npm?.homepage" />
-      <PackageFieldItem label="License" :value="lib.npm?.license" />
-      <PackageFieldItem label="Repository" :value="lib.npm?.repository?.url" />
-      <PackageFieldItem label="Used" :value="lib.used?.join(' ')" />
+      <NpmFieldItem label="Homepage" :value="lib.npm?.homepage" />
+      <NpmFieldItem label="License" :value="lib.npm?.license" />
+      <NpmFieldItem label="Repository" :value="lib.npm?.repository?.url" />
+      <NpmFieldItem label="Used" :value="lib.used?.join(' ')" />
     </div>
 
     <div class="flex-1 overflow-y-auto">
