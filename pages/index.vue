@@ -95,7 +95,6 @@ watch(h5, (value) => {
 
   shadow.attachShadow({ mode: 'open' }).innerHTML = value
 })
-
 </script>
 
 <template>
@@ -117,6 +116,7 @@ watch(h5, (value) => {
     </div>
 
     <div class="flex-1 overflow-y-auto">
+      <span class="hidden">{{ domId }}</span>
       <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
       <div v-show="!hasLink" :id="domId" class="w-full h-full px-4 py-3 box-border " />
     </div>
