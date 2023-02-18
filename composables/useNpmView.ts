@@ -1,10 +1,11 @@
-export const useNpmView = () => {
+interface Props {
+  lib: Ref<Partial<Lib>>
+}
+
+export const useNpmView = ({ lib }: Props) => () => {
   const store = useStore()
 
-  const lib = ref<Partial<Lib>>({ conf: { link: '' } })
-
   const hasLink = computed(() => {
-    debugger
     return lib.value.conf?.link || ''
   })
   const hasRepo = computed(() => lib.value.conf?.repo || '')
@@ -19,9 +20,8 @@ export const useNpmView = () => {
 
       store.cacheLib(store.lib.name, npmView)
       lib.value = store.lib
-      debugger
     }
   }
 
-  return { lib, hasLink, hasRepo, frameSrc, getNpmView }
+  return { hasLink, hasRepo, frameSrc, getNpmView }
 }

@@ -5,52 +5,26 @@ const store = useStore()
 const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
-const hasLink = computed(() => lib.value.conf?.link || '')
-const hasRepo = computed(() => lib.value.conf?.repo || '')
-
+const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { repo, getRepoMarkdown } = useRepoH5({ docRef, hasLink, hasRepo })()
 
+store.getPackageJSON()
 store.getUndocConf()
-
-const { data: json } = await useFetch('/api/package-json')
-
-json.value && store.parsePackageJSON(json.value)
-
-const fetchNPM = async () => {
-  if (!store.lib) { return }
-
-  if (!store.libs[store.lib.name]?.npm) {
-    const npmView = await $fetch('/api/npm-view', { query: { name: store.lib?.name } })
-
-    store.cacheLib(store.lib.name, npmView)
-    lib.value = store.lib
-  }
-}
-
-const setDocSrc = () => {
-  if (hasLink.value) {
-    frameSrc.value = lib.value.conf?.link || ''
-    return
-  }
-
-  if (hasRepo.value) {
-    repo.value.url = lib.value.conf?.repo || ''
-    return
-  }
-
-  repo.value.url = lib.value.npm?.repository?.url || ''
-}
 
 watch(() => store.lib, async (value) => {
   if (!value) { return }
 
   lib.value = store.lib || {}
 
-  if (value.conf?.repo) { fetchNPM() }
+  if (value.conf?.repo) { getNpmView() }
 
-  if (!value.conf?.repo) { await fetchNPM() }
+  if (!value.conf?.repo) { await getNpmView() }
 
-  setDocSrc()
+  if (hasLink.value) {
+    frameSrc.value = lib.value.conf?.link || ''
+  }
+
+  repo.value.url = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
   getRepoMarkdown()
 })

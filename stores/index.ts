@@ -18,6 +18,11 @@ export const useStore = defineStore('store', {
   }),
 
   actions: {
+    async getPackageJSON () {
+      const data = await $fetch('/api/package-json')
+      data && this.parsePackageJSON(data)
+    },
+
     async getUndocConf () {
       const data: UndocConfig = await $fetch('/api/undoc-config')
       this.undocConf = data
