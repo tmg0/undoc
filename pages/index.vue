@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import Markdownit from 'markdown-it'
-
 const docRef = ref()
-const mdit = new Markdownit()
 
 const store = useStore()
 const lib = ref<Partial<Lib>>({})
-const pending = ref(false)
-const md = ref('')
 const frameSrc = ref('')
-const repo = ref('')
-
-const h5 = computed(() => mdit.render(md.value))
 
 const hasLink = computed(() => lib.value.conf?.link || '')
 const hasRepo = computed(() => lib.value.conf?.repo || '')
+
+const { repo, getRepoMarkdown } = useRepoH5({ docRef, hasLink, hasRepo })()
 
 store.getUndocConf()
 
@@ -26,25 +20,10 @@ const fetchNPM = async () => {
   if (!store.lib) { return }
 
   if (!store.libs[store.lib.name]?.npm) {
-    pending.value = true
     const npmView = await $fetch('/api/npm-view', { query: { name: store.lib?.name } })
 
     store.cacheLib(store.lib.name, npmView)
     lib.value = store.lib
-
-    pending.value = false
-  }
-}
-
-const fetchMD = async () => {
-  if (repo.value) {
-    md.value = await $fetch('/api/repo-doc', {
-      query: {
-        name: store.lib?.name,
-        api: store.lib?.selected,
-        repo: repo.value
-      }
-    })
   }
 }
 
@@ -55,11 +34,11 @@ const setDocSrc = () => {
   }
 
   if (hasRepo.value) {
-    repo.value = lib.value.conf?.repo || ''
+    repo.value.url = lib.value.conf?.repo || ''
     return
   }
 
-  repo.value = lib.value.npm?.repository?.url || ''
+  repo.value.url = lib.value.npm?.repository?.url || ''
 }
 
 watch(() => store.lib, async (value) => {
@@ -73,23 +52,9 @@ watch(() => store.lib, async (value) => {
 
   setDocSrc()
 
-  fetchMD()
+  getRepoMarkdown()
 })
 
-watch(h5, (value) => {
-  if (hasLink.value) { return }
-
-  const shadow = docRef.value
-
-  if (!shadow) { return }
-
-  if (shadow.shadowRoot) {
-    shadow.shadowRoot.innerHTML = value
-    return
-  }
-
-  shadow.attachShadow({ mode: 'open' }).innerHTML = value
-})
 </script>
 
 <template>

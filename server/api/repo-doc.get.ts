@@ -42,6 +42,6 @@ export default defineEventHandler(async (event) => {
 
     const file = Buffer.from(md.content, 'base64').toString()
 
-    return file
+    return { md: file, owner, repo, branch }
   } catch (error) { return String(error) }
 })
