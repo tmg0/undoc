@@ -84,8 +84,8 @@ watch(() => store.lib, async (value) => {
 watch(h5, (value) => {
   if (hasLink.value) { return }
 
-  const shadow = (document as any).getElementById(domId).attachShadow({ mode: 'open' })
-  shadow.innerHTML = value
+  const shadow = document.getElementById(domId)?.attachShadow({ mode: 'open' })
+  if (shadow) { shadow.innerHTML = value }
 })
 
 </script>
