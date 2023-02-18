@@ -22,10 +22,6 @@ const { data: json } = await useFetch('/api/package-json')
 
 json.value && store.parsePackageJSON(json.value)
 
-const { data: used, error } = await useFetch('/api/used-apis')
-
-if (!error.value && used.value) { store.cacheUsed(used.value as Record<string, string[]>) }
-
 const fetchNPM = async () => {
   if (!store.lib) { return }
 
@@ -45,7 +41,7 @@ const fetchMD = async () => {
     md.value = await $fetch('/api/repo-doc', {
       query: {
         name: store.lib?.name,
-        api: store.lib?.used[0],
+        api: store.lib?.selected,
         repo: repo.value
       }
     })
@@ -97,26 +93,31 @@ watch(h5, (value) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <div class="bg-gray-100/80 h-64 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4 px-4 py-3 flex-shrink-0">
-      <NpmFieldItem label="Name" :value="lib.name" />
-      <NpmFieldItem label="Author" :value="lib.npm?.author" />
+  <div class="w-screen h-screen flex font-sans">
+    <Sidebar />
 
-      <NpmFieldItem label="Engines">
-        <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key" class="text-gray-500/50 text-sm">
-          {{ key + value }}
+    <div class="flex-1">
+      <div class="flex flex-col h-full">
+        <div class="bg-gray-100/80 h-64 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4 px-4 py-3 flex-shrink-0">
+          <NpmFieldItem label="Name" :value="lib.name" />
+          <NpmFieldItem label="Author" :value="lib.npm?.author" />
+
+          <NpmFieldItem label="Engines">
+            <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key" class="text-gray-500/50 text-sm">
+              {{ key + value }}
+            </div>
+          </NpmFieldItem>
+
+          <NpmFieldItem label="Homepage" :value="lib.npm?.homepage" />
+          <NpmFieldItem label="License" :value="lib.npm?.license" />
+          <NpmFieldItem label="Repository" :value="lib.npm?.repository?.url" />
         </div>
-      </NpmFieldItem>
 
-      <NpmFieldItem label="Homepage" :value="lib.npm?.homepage" />
-      <NpmFieldItem label="License" :value="lib.npm?.license" />
-      <NpmFieldItem label="Repository" :value="lib.npm?.repository?.url" />
-      <NpmFieldItem label="Used" :value="lib.used?.join(' ')" />
-    </div>
-
-    <div class="flex-1 overflow-y-auto">
-      <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
-      <div v-if="!hasLink" ref="docRef" class="w-full h-full px-4 py-3 box-border " />
+        <div class="flex-1 overflow-y-auto">
+          <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
+          <div v-if="!hasLink" ref="docRef" class="w-full h-full px-4 py-3 box-border " />
+        </div>
+      </div>
     </div>
   </div>
 </template>

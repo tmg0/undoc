@@ -13,6 +13,7 @@ interface UndocConfig {
 
 interface Lib {
   name: string
+  selected?: string
   version?: string
   used: string[]
   npm?: Partial<NPMView>

@@ -24,18 +24,21 @@ export const useStore = defineStore('store', {
     },
 
     parsePackageJSON (json: PackageJSON) {
-      this.libs = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
-        if (name.includes('@types')) { return undefined }
+      const result = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
+        if (name.includes('@types')) { return }
         return { name, version, used: [] }
       })
+      this.libs = { ...this.libs, ...result }
     },
 
-    async selectLib (name: string) {
-      if (name === this.lib?.name) { return }
+    async selectLib (name: string, api?: string) {
+      if (name === this.lib?.name && api === this.lib?.selected) { return }
+
       if (!this.undocConf) { await this.getUndocConf() }
 
       this.libs[name].conf = { ...this.undocConf?.docs[name] }
       this.lib = { ...this.lib, ...this.libs[name] }
+      this.lib.selected = api || this.lib.used[0]
     },
 
     cacheLib (name: string, npm: Partial<NPMView>) {
