@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import Markdownit from 'markdown-it'
-import { uid } from 'uid'
 
-const domId = uid()
+const docRef = ref()
 const mdit = new Markdownit()
 
 const store = useStore()
@@ -84,7 +83,7 @@ watch(() => store.lib, async (value) => {
 watch(h5, (value) => {
   if (hasLink.value) { return }
 
-  const shadow = document.getElementById(domId)
+  const shadow = docRef.value
 
   if (!shadow) { return }
 
@@ -116,9 +115,8 @@ watch(h5, (value) => {
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <span class="hidden">{{ domId }}</span>
       <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
-      <div v-show="!hasLink" :id="domId" class="w-full h-full px-4 py-3 box-border " />
+      <div v-if="!hasLink" ref="docRef" class="w-full h-full px-4 py-3 box-border " />
     </div>
   </div>
 </template>
