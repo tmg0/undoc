@@ -18,7 +18,7 @@ export const useStore = defineStore('store', {
   }),
 
   actions: {
-    async getPackageJSON () {
+    async getLibs () {
       const data = await $fetch('/api/package-json')
       data && this.parsePackageJSON(data)
     },

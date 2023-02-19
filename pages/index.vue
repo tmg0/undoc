@@ -8,7 +8,7 @@ const frameSrc = ref('')
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { repo, getRepoMarkdown } = useRepoH5({ docRef, hasLink, hasRepo })()
 
-store.getPackageJSON()
+store.getLibs()
 store.getUndocConf()
 
 watch(() => store.lib, async (value) => {
