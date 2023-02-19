@@ -10,7 +10,7 @@ const getRepoByGithubAPI = async (owner: string, repo: string) => {
 
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
 
-export const asyncGetQuery = <R extends Record<string, any>>(event: H3Event, schema?: (f: <T>(value?: T | undefined) => Field<T>) => R): Promise<typeof schema extends undefined ? Record<string, any>: ValidatorFields<R>> => {
+export const asyncGetQuery = async <R extends Record<string, any>>(event: H3Event, schema?: (f: <T>(value?: T | undefined) => Field<T>) => R): Promise<typeof schema extends undefined ? Record<string, any>: ValidatorFields<R>> => {
   const query = getQuery(event)
 
   if (isUndefined(schema)) { return Promise.resolve(query as any) }
@@ -21,7 +21,12 @@ export const asyncGetQuery = <R extends Record<string, any>>(event: H3Event, sch
     (validator.value as any)[key] = value
   })
 
-  return Promise.resolve(validator.value)
+  try {
+    await validator.validate()
+    return validator.value
+  } catch {
+    throw new Error('Query error')
+  }
 }
 
 export default defineEventHandler(async (event) => {
@@ -36,6 +41,14 @@ export default defineEventHandler(async (event) => {
     if (Array.isArray(query.repo)) { throw createError('Should provide only one repo to find.') }
     if (Array.isArray(query.name)) { throw createError('Should provide only one lib to find.') }
     if (Array.isArray(query.branch)) { throw createError('Should provide only one repo branch to find.') }
+
+    // const query = await asyncGetQuery(event, f => ({
+    //   name: f<string>().required().isString(),
+    //   owner: f<string>().required().isString(),
+    //   repo: f<string>().required().isString(),
+    //   branch: f<string>(''),
+    //   filepath: f<string>('')
+    // }))
 
     const filepath = query.filepath || 'README.md'
 
