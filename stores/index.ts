@@ -19,7 +19,7 @@ export const useStore = defineStore('store', {
 
   actions: {
     async getLibs () {
-      const data = await $fetch('/api/package-json')
+      const data = await $fetch('/api/node-config')
       data && this.parsePackageJSON(data)
     },
 
