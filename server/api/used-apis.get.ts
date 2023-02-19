@@ -75,6 +75,6 @@ export default defineEventHandler((event) => {
       })
     })
 
-    return mapValues(result, value => [...new Set(...value)])
+    return mapValues(result, value => [...new Set([...value])])
   } catch (error) { throw new Error(String(error)) }
 })
