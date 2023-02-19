@@ -18,7 +18,7 @@ const r = (url = '') => {
 }
 
 export const useRepoH5 = ({ hasLink }: Props) => () => {
-  const mdit = new Markdownit()
+  const mdit = new Markdownit({ html: true })
 
   const store = useStore()
   const docRef = ref()
