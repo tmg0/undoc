@@ -16,17 +16,18 @@ if (!error.value && data.value) { store.cacheUsed(data.value as Record<string, s
 
     <div class="flex-1 px-4 py-3 overflow-y-auto">
       <details v-for="({ name, version, used }) in Object.values(store.libs)" :key="name">
-        <summary class="flex w-full justify-between cursor-pointer" @click="!used.length && emit('select', { lib: name })">
+        <summary class="flex w-full justify-between cursor-pointer gap-1" @click="!used.length && emit('select', { lib: name })">
           <div :title="name" class="flex items-center ">
             <div class="w-5">
               <CaretRight v-if="used.length" class="carbon-caret-right w-full flex-shrink-0 transition-all" />
             </div>
 
-            <div class="flex-1 truncate">
+            <div class="flex-1 truncate w-52">
               {{ name }}
             </div>
           </div>
-          <span>{{ version }}</span>
+
+          <div>{{ version }}</div>
         </summary>
 
         <div class="pl-5">

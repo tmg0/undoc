@@ -7,20 +7,9 @@
         "createApp": "src/api/application.md"
       }
     },
-    "nuxt": {
-      "repo": "https://github.com/nuxt/nuxt.git",
-      "exports": {
-        "useHead": "docs/3.api/1.composables/use-head.md",
-        "useFetch": "docs/3.api/1.composables/use-fetch.md"
-      }
-    },
     "vue-router": {
       "repo": "https://github.com/vuejs/router.git",
-      "exports": {
-        "onBeforeRouteLeave": "packages/docs/api/index.md",
-        "onBeforeRouteUpdate": "packages/docs/api/index.md",
-        "useLink": "packages/docs/api/index.md"
-      }
+      "readme": "packages/docs/api/index.md"
     },
     "uid": {
       "repo": "https://github.com/lukeed/uid.git",

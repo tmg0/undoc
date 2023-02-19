@@ -40,7 +40,15 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
   const getRepoMarkdown = async () => {
     if (repoURL.value) {
-      const filepath = store.lib?.selected ? store.lib?.conf?.exports?.[store.lib.selected] : store.lib?.conf?.readme
+      const filepath = (() => {
+        if (!store.lib?.selected) { return store.lib?.conf?.readme }
+
+        if (store.lib?.conf?.exports) { return store.lib?.conf?.exports?.[store.lib.selected] }
+
+        const parser = useRepoParsers?.[store.lib?.name]
+
+        return parser && parser(store.lib?.selected)
+      })()
 
       const data = await $fetch('/api/repo-doc', {
         query: {

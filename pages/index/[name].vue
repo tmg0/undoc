@@ -4,10 +4,12 @@ const store = useStore()
 const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
-store.selectLib(route.params.name as string, route.query.api as string)
-
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
+
+watch(() => [route.params, route.query], ([params, query]) => {
+  store.selectLib(params.name as string, query.api as string)
+}, { immediate: true })
 
 watch(() => store.lib, async (value) => {
   if (!value) { return }
