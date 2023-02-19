@@ -1,4 +1,4 @@
-const useMapValues = <T extends Record<string, any>>(object: T, iteratee: (value: T, key: string, object: Record<string, T>) => any) => {
+const useMapValues = <T>(object: Record<string, T>, iteratee: (value: T, key: string, object: Record<string, T>) => any) => {
   object = Object(object)
   const result: Record<string, any> = {}
 

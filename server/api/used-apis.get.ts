@@ -9,6 +9,17 @@ const excludePrefix = ['@types', '~~', '@@', '~', '@', '..', '.', '/']
 
 const autoImportsAlias: Record<string, string> = { '#app': 'nuxt' }
 
+const mapValues = <T>(object: Record<string, T>, iteratee: (value: T, key: string, object: Record<string, T>) => any) => {
+  object = Object(object)
+  const result: Record<string, any> = {}
+
+  Object.keys(object).forEach((key) => {
+    const value = iteratee(object[key], key, object)
+    if (value) { result[key] = value }
+  })
+  return result
+}
+
 const getIgnore = (path = '.') => {
   const file = readFileSync(join(process.cwd(), path, '.gitignore'), 'utf8')
   return ignore().add(file)
@@ -64,6 +75,6 @@ export default defineEventHandler((event) => {
       })
     })
 
-    return result
-  } catch (error) { return { error } }
+    return mapValues(result, value => [...new Set(...value)])
+  } catch (error) { throw new Error(String(error)) }
 })
