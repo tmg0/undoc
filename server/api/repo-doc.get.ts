@@ -1,8 +1,27 @@
+import { defineField, defineValidator, type Field, type ValidatorFields } from 'veelidate'
+import type { H3Event } from 'h3'
+
 const githubAPI = 'https://api.github.com'
 
 const getRepoByGithubAPI = async (owner: string, repo: string) => {
   const data: { default_branch: string } = await $fetch(`${githubAPI}/repos/${owner}/${repo}`)
   return data
+}
+
+export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
+
+export const asyncGetQuery = <R extends Record<string, any>>(event: H3Event, schema?: (f: <T>(value?: T | undefined) => Field<T>) => R): Promise<typeof schema extends undefined ? Record<string, any>: ValidatorFields<R>> => {
+  const query = getQuery(event)
+
+  if (isUndefined(schema)) { return Promise.resolve(query as any) }
+
+  const validator = defineValidator().setup(() => schema(defineField))
+
+  Object.entries(query).forEach(([key, value]) => {
+    (validator.value as any)[key] = value
+  })
+
+  return Promise.resolve(validator.value)
 }
 
 export default defineEventHandler(async (event) => {

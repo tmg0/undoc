@@ -7,18 +7,16 @@ const frameSrc = ref('')
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
 
-watch(() => [route.params, route.query], ([params, query]) => {
+watch(() => [route.params, route.query], async ([params, query]) => {
   store.selectLib(params.name as string, query.api as string)
-}, { immediate: true })
 
-watch(() => store.lib, async (value) => {
-  if (!value) { return }
+  if (!store.lib) { return }
 
   lib.value = store.lib || {}
 
-  if (value.conf?.repo) { getNpmView() }
+  if (store.lib.conf?.repo) { getNpmView() }
 
-  if (!value.conf?.repo) { await getNpmView() }
+  if (!store.lib.conf?.repo) { await getNpmView() }
 
   if (hasLink.value) {
     frameSrc.value = lib.value.conf?.link || ''
