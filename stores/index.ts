@@ -31,7 +31,7 @@ export const useStore = defineStore('store', {
     parsePackageJSON (json: PackageJSON) {
       const result = useMapValues({ ...(json.dependencies || {}), ...(json.devDependencies || {}) }, (version, name) => {
         if (name.includes('@types')) { return }
-        return { name, version, used: this.libs[name].used }
+        return { name, version, used: this.libs[name]?.used || [] }
       })
       this.libs = { ...this.libs, ...result }
     },

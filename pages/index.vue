@@ -1,12 +1,11 @@
 <script setup lang="ts">
-const docRef = ref()
 
 const store = useStore()
 const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
-const { repo, getRepoMarkdown } = useRepoH5({ docRef, hasLink, hasRepo })()
+const { repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
 
 store.getLibs()
 store.getUndocConf()
@@ -24,7 +23,7 @@ watch(() => store.lib, async (value) => {
     frameSrc.value = lib.value.conf?.link || ''
   }
 
-  repo.value.url = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
+  repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
   getRepoMarkdown()
 })

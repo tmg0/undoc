@@ -1,43 +1,59 @@
 import Markdownit from 'markdown-it'
+import { extname } from 'pathe'
 
 interface Repo {
   url: string
   name: string
   owner: string
-  md: string
-  branch: string
+  branch?: string
 }
 
 interface Props {
-  hasRepo: ComputedRef<string>
   hasLink: ComputedRef<string>
-  docRef: Ref<any>
 }
 
-export const useRepoH5 = ({ docRef, hasLink }: Props) => () => {
+const r = (url = '') => {
+  const extension = extname(url)
+  return url.replace(new RegExp(extension + '$'), '')
+}
+
+export const useRepoH5 = ({ hasLink }: Props) => () => {
   const mdit = new Markdownit()
 
   const store = useStore()
-  const repo = ref<Partial<Repo>>({})
+  const docRef = ref()
+  const repoURL = ref<string | undefined>()
+  const md = ref('')
+  const defaultBranch = ref('')
 
-  const h5 = computed(() => mdit.render(repo.value?.md || ''))
+  const h5 = computed(() => mdit.render(md.value))
+
+  const repo = computed<Partial<Repo>>(() => {
+    if (!repoURL.value) { return {} }
+
+    const branch = store.lib?.conf?.branch
+    const url = repoURL.value.match(/(https?|git):\/\/\S+/g)?.[0]
+    const [owner, name] = new URL(r(url)).pathname.split('/').filter(Boolean)
+
+    return { url, name, owner, branch }
+  })
 
   const getRepoMarkdown = async () => {
-    if (repo.value.url) {
+    if (repoURL.value) {
+      const filepath = store.lib?.selected ? store.lib?.conf?.exports?.[store.lib.selected] : store.lib?.conf?.readme
+
       const data = await $fetch('/api/repo-doc', {
         query: {
           name: store.lib?.name,
-          api: store.lib?.selected,
-          repo: repo.value?.url
+          filepath,
+          repo: repo.value.name,
+          owner: repo.value.owner,
+          branch: repo.value.branch
         }
       })
 
-      if (typeof data === 'string') { return }
-
-      repo.value.md = data.md
-      repo.value.owner = data.owner
-      repo.value.name = data.repo
-      repo.value.branch = data.branch
+      md.value = data.md
+      defaultBranch.value = data.branch
     }
   }
 
@@ -60,11 +76,12 @@ export const useRepoH5 = ({ docRef, hasLink }: Props) => () => {
       const url: string = imgs[i].src
 
       if (url.includes('_undoc')) {
-        const { owner, name, branch } = repo.value
+        const { owner, name, branch: confBranch } = repo.value
+        const branch = confBranch || defaultBranch.value
         imgs[i].src = url.replace(/(.*?)(_undoc)/, `https://github.com/${owner}/${name}/raw/${branch}`)
       }
     }
   })
 
-  return { h5, repo, getRepoMarkdown }
+  return { h5, repoURL, docRef, getRepoMarkdown }
 }
