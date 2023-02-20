@@ -9,7 +9,7 @@ const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { md, repoURL, docRef, defaultBranch, getRepoMarkdown } = useRepoH5({ hasLink })()
 
 watch(() => [route.params, route.query], async ([params, query]) => {
-  store.selectLib(params.name as string, query.api as string)
+  await store.selectLib(params.name as string, query.api as string)
 
   if (!store.lib) { return }
 

@@ -44,7 +44,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
       const filepath = (() => {
         if (!store.lib?.selected) { return store.lib?.conf?.readme }
 
-        if (store.lib?.conf?.exports) { return store.lib?.conf?.exports?.[store.lib.selected] }
+        if (store.lib?.conf?.apis) { return store.lib?.conf?.apis?.[store.lib.selected] }
 
         const parser = useRepoParsers?.[store.lib?.name]
 

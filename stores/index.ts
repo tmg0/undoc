@@ -43,7 +43,7 @@ export const useStore = defineStore('store', {
 
       if (!this.libs[name]) { this.libs[name] = { name, used: [] } }
 
-      this.libs[name].conf = { ...this.undocConf?.docs[name] }
+      this.libs[name].conf = { ...this.undocConf?.[name] }
       this.lib = { ...this.lib, ...this.libs[name] }
       this.lib.selected = api || this.lib.used[0]
     },

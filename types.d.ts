@@ -3,12 +3,11 @@ interface UndocDoc {
   link?: string
   readme?: string
   branch?: string
-  exports?: Record<string, string>
+  apis?: Record<string, string>
 }
 
 interface UndocConfig {
-  git: string
-  docs: Record<string, UndocDoc | undefined>
+  [key: string]: UndocDoc | undefined
 }
 
 interface Lib {
