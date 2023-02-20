@@ -60,8 +60,6 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
         query: { filepath, repo: name, owner, branch }
       })
 
-      defaultBranch.value = data.branch
-
       return data
     }
   }
@@ -92,5 +90,5 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     }
   })
 
-  return { md, h5, repo, repoURL, docRef, getRepoMarkdown }
+  return { md, h5, repo, repoURL, docRef, defaultBranch, getRepoMarkdown }
 }
