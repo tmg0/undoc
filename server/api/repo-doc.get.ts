@@ -30,7 +30,6 @@ export const asyncGetQuery = async <R extends Record<string, any>>(event: H3Even
 export default defineEventHandler(async (event) => {
   try {
     const query = await asyncGetQuery(event, f => ({
-      name: f<string>().required().isString(),
       owner: f<string>().required().isString(),
       repo: f<string>().required().isString(),
       branch: f<string>(''),

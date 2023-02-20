@@ -6,6 +6,7 @@ interface Repo {
   name: string
   owner: string
   branch?: string
+  filepath?: string
 }
 
 interface Props {
@@ -32,36 +33,36 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     if (!repoURL.value) { return {} }
 
     const branch = store.lib?.conf?.branch
-    const url = repoURL.value.match(/(https?|git):\/\/\S+/g)?.[0]
+    const url = repoURL.value.match(/(https?|git|ssh):\/\/\S+/g)?.[0]
     const [owner, name] = new URL(r(url)).pathname.split('/').filter(Boolean)
 
-    return { url, name, owner, branch }
+    const filepath = (() => {
+      if (!store.lib?.selected) { return store.lib?.conf?.readme }
+
+      if (store.lib?.conf?.exports) { return store.lib?.conf?.exports?.[store.lib.selected] }
+
+      const parser = useRepoParsers?.[store.lib?.name]
+
+      return parser && parser(store.lib?.selected)
+    })()
+
+    return { url, name, owner, branch, filepath }
   })
 
   const getRepoMarkdown = async () => {
     if (repoURL.value) {
-      const filepath = (() => {
-        if (!store.lib?.selected) { return store.lib?.conf?.readme }
-
-        if (store.lib?.conf?.exports) { return store.lib?.conf?.exports?.[store.lib.selected] }
-
-        const parser = useRepoParsers?.[store.lib?.name]
-
-        return parser && parser(store.lib?.selected)
-      })()
-
       const data = await $fetch('/api/repo-doc', {
         query: {
-          name: store.lib?.name,
-          filepath,
+          filepath: repo.value.filepath,
           repo: repo.value.name,
           owner: repo.value.owner,
           branch: repo.value.branch
         }
       })
 
-      md.value = data.md
       defaultBranch.value = data.branch
+
+      return data
     }
   }
 
@@ -91,5 +92,5 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     }
   })
 
-  return { h5, repoURL, docRef, getRepoMarkdown }
+  return { md, h5, repo, repoURL, docRef, getRepoMarkdown }
 }

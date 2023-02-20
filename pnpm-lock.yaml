@@ -12,6 +12,7 @@ specifiers:
   '@vueuse/nuxt': ^9.12.0
   eslint: ^8.34.0
   glob: ^8.1.0
+  idb: ^7.1.1
   ignore: ^5.2.4
   markdown-it: ^13.0.1
   mlly: ^1.1.0
@@ -28,6 +29,7 @@ dependencies:
   '@pinia/nuxt': 0.4.6_typescript@4.9.5
   '@vueuse/nuxt': 9.12.0_nuxt@3.2.0
   glob: 8.1.0
+  idb: 7.1.1
   ignore: 5.2.4
   markdown-it: 13.0.1
   mlly: 1.1.0
@@ -4200,6 +4202,10 @@ packages:
       postcss: ^8.1.0
     dependencies:
       postcss: 8.4.21
+    dev: false
+
+  /idb/7.1.1:
+    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
     dev: false
 
   /ieee754/1.2.1:
