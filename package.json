@@ -6,7 +6,10 @@
   },
   "files": [
     "undoc.config.json",
-    ".output"
+    "nuxt.config.json",
+    ".output",
+    "LICENSE",
+    "README.md"
   ],
   "workspaces": [
     "client"
