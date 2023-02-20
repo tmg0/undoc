@@ -13,41 +13,39 @@ export const useIDB = () => {
   })
 
   const get = async (store: CacheStore, key: string, def = '') => {
-    const item = await (await db).get(store, key)
+    if (!db) { return '' }
 
-    if (item !== null) {
-      try {
-        const data = JSON.parse(item)
+    const data = await (await db).get(store, key)
 
-        if (!data.expire) { return data.value }
+    if (!data) { return def }
 
-        if (data.expire >= new Date().getTime()) { return data.value }
+    if (!data.expire) { return data.value }
 
-        await del(store, key)
-      } catch (err) {
-        return def
-      }
-    }
+    if (data.expire >= new Date().getTime()) { return data.value }
 
-    return def
+    del(store, key)
   }
 
-  const set = async (store: CacheStore, value: any, key: string, expire?: number) => {
-    const stringifyValue = JSON.stringify({
+  const set = async (store: CacheStore, value: any, key: string, expire: number = 1000 * 60 * 60) => {
+    if (!db) { return '' }
+
+    return await (await db).put(store, {
       value,
       expire: expire ? new Date().getTime() + expire : null
-    })
-
-    return await (await db).put(store, stringifyValue, key)
+    }, key)
   }
 
   const del = async (store: CacheStore, key: string) => {
+    if (!db) { return '' }
+
     return await (await db).delete(store, key)
   }
 
   const clear = async (store: CacheStore) => {
+    if (!db) { return '' }
+
     return await (await db).clear(store)
   }
 
-  return { db, get, set, del, clear }
+  return { db, open, get, set, del, clear }
 }

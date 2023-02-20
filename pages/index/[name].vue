@@ -28,16 +28,15 @@ watch(() => store.lib, async () => {
 
   repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
-  if (!res) {
-    res = await getRepoMarkdown(async (k) => {
-      res = await get(CacheStore.REPO_DOC_API, k)
-      key = k
-      return !res
-    })
-    set(CacheStore.REPO_DOC_API, res, key)
-  }
+  const data = await getRepoMarkdown(async (k) => {
+    res = await get(CacheStore.REPO_DOC_API, k)
+    key = k
+    return !res
+  })
 
-  md.value = res.md
+  if (data) { set(CacheStore.REPO_DOC_API, data?.md, key) }
+
+  md.value = data?.md || res.md
 }, { immediate: true })
 
 </script>
