@@ -19,7 +19,7 @@ specifiers:
   pathe: ^1.1.0
   typescript: ^4.9.5
   unplugin-icons: ^0.15.3
-  veelidate: ^0.0.7
+  veelidate: ^0.0.8
 
 dependencies:
   '@iconify-json/carbon': 1.1.15
@@ -42,7 +42,7 @@ devDependencies:
   pathe: 1.1.0
   typescript: 4.9.5
   unplugin-icons: 0.15.3
-  veelidate: 0.0.7
+  veelidate: 0.0.8
 
 packages:
 
@@ -7558,8 +7558,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /veelidate/0.0.7:
-    resolution: {integrity: sha512-xGNgWiYe1eCALBZUYL7J6c3n5PF5gF+96rA4IR+IhWDvSnymQYWtXJT5o6MPAq0yoqBcVAdmKHpJkm0qVpQrhg==}
+  /veelidate/0.0.8:
+    resolution: {integrity: sha512-dWuvrGpPxrvm0TzT80nWos2LeUesf0JBJYrF+7bdufqu5EU7Y0+GpL7FDATkDblbp/CmyTrYFUcJQxsFELmvsw==}
     dev: true
 
   /vite-node/0.28.5_@types+node@18.13.0:

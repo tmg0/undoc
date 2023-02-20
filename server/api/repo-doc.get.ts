@@ -31,24 +31,13 @@ export const asyncGetQuery = async <R extends Record<string, any>>(event: H3Even
 
 export default defineEventHandler(async (event) => {
   try {
-    const query = getQuery(event)
-
-    if (!query.name) { throw createError('Should provide a lib name when find target doc.') }
-    if (!query.owner) { throw createError('Should provide a repo owner when find target doc.') }
-    if (!query.repo) { throw createError('Should provide a repo path when find target doc.') }
-
-    if (Array.isArray(query.owner)) { throw createError('Should provide only one repo owner to find.') }
-    if (Array.isArray(query.repo)) { throw createError('Should provide only one repo to find.') }
-    if (Array.isArray(query.name)) { throw createError('Should provide only one lib to find.') }
-    if (Array.isArray(query.branch)) { throw createError('Should provide only one repo branch to find.') }
-
-    // const query = await asyncGetQuery(event, f => ({
-    //   name: f<string>().required().isString(),
-    //   owner: f<string>().required().isString(),
-    //   repo: f<string>().required().isString(),
-    //   branch: f<string>(''),
-    //   filepath: f<string>('')
-    // }))
+    const query = await asyncGetQuery(event, f => ({
+      name: f<string>().required().isString(),
+      owner: f<string>().required().isString(),
+      repo: f<string>().required().isString(),
+      branch: f<string>(''),
+      filepath: f<string>('')
+    }))
 
     const filepath = query.filepath || 'README.md'
 

@@ -36,7 +36,7 @@
     "pathe": "^1.1.0",
     "typescript": "^4.9.5",
     "unplugin-icons": "^0.15.3",
-    "veelidate": "^0.0.7"
+    "veelidate": "^0.0.8"
   },
   "dependencies": {
     "@iconify-json/carbon": "^1.1.15"
