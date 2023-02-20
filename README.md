@@ -28,6 +28,8 @@ Undoc use indexedDB to cache repo markdown file content, please use the latest v
 - Custom undoc config
 - Custom repo doc filepath parser
 - Dynamic server port
+- More lib doc filepath parser
+- Friendly ui
 
 ## License
 [MIT](./LICENSE)
