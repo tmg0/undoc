@@ -6,7 +6,7 @@
   },
   "files": [
     "undoc.config.json",
-    "nuxt.config.json",
+    "nuxt.config.ts",
     ".output",
     "LICENSE",
     "README.md"
