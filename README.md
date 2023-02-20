@@ -12,11 +12,22 @@ Make sure to install the dependencies:
 pnpm add undoc -g
 ```
 
-Start server
+Start server ( under target node project dir )
 
 ```bash
 undoc
 ```
+
+Server will start at port 3000, open the browser and view `127.0.0.1:3000/_undoc`.
+
+Undoc use indexedDB to cache repo markdown file content, please use the latest version of chrome / firefox.
+
+## Features
+
+- Monorepo workspace dependencies
+- Custom undoc config
+- Custom repo doc filepath parser
+- Dynamic server port
 
 ## License
 [MIT](./LICENSE)
