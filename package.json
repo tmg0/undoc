@@ -5,6 +5,7 @@
     "undoc": ".output/server/index.mjs"
   },
   "files": [
+    ".npmrc",
     "undoc.config.json",
     "nuxt.config.ts",
     ".output",
