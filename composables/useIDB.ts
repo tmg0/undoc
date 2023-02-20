@@ -1,13 +1,14 @@
 import { openDB } from 'idb'
 
 export enum CacheStore {
-  GITHUB_API = 'github-api'
+  GITHUB_API = 'github-api',
+  REPO_DOC_API = 'repo-doc-api'
 }
 
 export const useIDB = () => {
   const db = openDB('cache', 1, {
     upgrade (db) {
-      db.createObjectStore(CacheStore.GITHUB_API)
+      db.createObjectStore(CacheStore.REPO_DOC_API)
     }
   })
 
@@ -37,7 +38,7 @@ export const useIDB = () => {
       expire: expire ? new Date().getTime() + expire : null
     })
 
-    return await (await db).put(store, key, stringifyValue)
+    return await (await db).put(store, stringifyValue, key)
   }
 
   const del = async (store: CacheStore, key: string) => {

@@ -6,8 +6,7 @@ const frameSrc = ref('')
 
 const { get, set } = useIDB()
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
-const { md, repo, repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
-const { getContentAPI } = useGithubAPI()
+const { md, repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
 
 store.selectLib(route.params.name as string, route.query.api as string)
 
@@ -15,6 +14,7 @@ watch(() => store.lib, async () => {
   if (!store.lib) { return }
 
   let res: any
+  let key = ''
 
   lib.value = store.lib || {}
 
@@ -28,12 +28,13 @@ watch(() => store.lib, async () => {
 
   repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
-  const key = getContentAPI(repo.value.owner, repo.value.name, repo.value.filepath, repo.value.branch)
-  res = await get(CacheStore.GITHUB_API, key)
-
   if (!res) {
-    res = await getRepoMarkdown()
-    set(CacheStore.GITHUB_API, res, key)
+    res = await getRepoMarkdown(async (k) => {
+      res = await get(CacheStore.REPO_DOC_API, k)
+      key = k
+      return !res
+    })
+    set(CacheStore.REPO_DOC_API, res, key)
   }
 
   md.value = res.md
