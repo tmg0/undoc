@@ -17,9 +17,7 @@ export const asyncGetQuery = async <R extends Record<string, any>>(event: H3Even
 
   const validator = defineValidator().setup(() => schema(defineField))
 
-  Object.entries(query).forEach(([key, value]) => {
-    (validator.value as any)[key] = value
-  })
+  validator.value = query
 
   try {
     await validator.validate()

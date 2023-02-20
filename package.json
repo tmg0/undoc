@@ -1,6 +1,6 @@
 {
   "name": "undoc",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "license": "MIT",
   "bin": {
     "undoc": ".output/server/index.mjs"
@@ -33,7 +33,7 @@
     "nuxt": "^3.2.0",
     "pathe": "^1.1.0",
     "unplugin-icons": "^0.15.3",
-    "veelidate": "^0.0.8"
+    "veelidate": "^0.0.10"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
