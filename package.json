@@ -11,9 +11,6 @@
     "LICENSE",
     "README.md"
   ],
-  "workspaces": [
-    "client"
-  ],
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
