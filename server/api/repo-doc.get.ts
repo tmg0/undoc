@@ -22,8 +22,8 @@ export const asyncGetQuery = async <R extends Record<string, any>>(event: H3Even
   try {
     await validator.validate()
     return validator.value
-  } catch {
-    throw new Error('Query error')
+  } catch (error) {
+    throw new Error(String(error))
   }
 }
 
