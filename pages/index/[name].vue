@@ -49,7 +49,7 @@ watch(() => [route.params, route.query], async ([params, query]) => {
       <NpmFieldItem label="Author" :value="lib.npm?.author" />
 
       <NpmFieldItem label="Engines">
-        <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key" class="text-gray-500/50 text-sm">
+        <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key">
           {{ key + value }}
         </div>
       </NpmFieldItem>
