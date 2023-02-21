@@ -9,13 +9,6 @@
     "repo": "https://github.com/vuejs/router.git",
     "readme": "packages/docs/api/index.md"
   },
-  "uid": {
-    "repo": "https://github.com/lukeed/uid.git",
-    "readme": "readme.md"
-  },
-  "glob": {
-    "repo": "https://github.com/isaacs/node-glob"
-  },
   "typescript": {
     "link": "https://www.typescriptlang.org/"
   },
