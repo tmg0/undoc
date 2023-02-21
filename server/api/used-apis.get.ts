@@ -3,6 +3,7 @@ import { findExports, findStaticImports, parseStaticImport } from 'mlly'
 import { join, relative } from 'pathe'
 import ignore from 'ignore'
 import g from 'glob'
+import { asyncGetQuery } from 'h3-vee'
 
 const extraFiles = ['.nuxt/imports.d.ts']
 const excludePrefix = ['@types', '~~', '@@', '~', '@', '..', '.', '/']
@@ -43,10 +44,12 @@ const getAutoImports = () => {
   }).filter(Boolean)
 }
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   try {
+    const query = await asyncGetQuery(event, f => ({
+      path: f().isString()
+    }))
     const result: Record<string, string[]> = {}
-    const query = getQuery(event)
     const files = getFilesInDirectory(query.path as string)
 
     files.forEach((file) => {
