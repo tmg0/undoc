@@ -1,4 +1,4 @@
-import Markdownit from 'markdown-it'
+import markdownit from 'markdown-it'
 import { parse } from 'pathe'
 
 interface Repo {
@@ -13,9 +13,9 @@ interface Props {
   hasLink: ComputedRef<string>
 }
 
-export const useRepoH5 = ({ hasLink }: Props) => () => {
-  const mdit = new Markdownit({ html: true })
+const mdit = markdownit({ html: true })
 
+export const useRepoH5 = ({ hasLink }: Props) => () => {
   const store = useStore()
   const docRef = ref()
   const repoURL = ref<string | undefined>()
