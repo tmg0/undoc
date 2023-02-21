@@ -1,5 +1,5 @@
 import Markdownit from 'markdown-it'
-import { extname } from 'pathe'
+import { parse } from 'pathe'
 
 interface Repo {
   url: string
@@ -11,11 +11,6 @@ interface Repo {
 
 interface Props {
   hasLink: ComputedRef<string>
-}
-
-const r = (url = '') => {
-  const extension = extname(url)
-  return url.replace(new RegExp(extension + '$'), '')
 }
 
 export const useRepoH5 = ({ hasLink }: Props) => () => {
@@ -36,7 +31,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     const branch = store.lib?.conf?.branch
     const [_, owner, name] = repoURL.value.match(/github\.com\/([^/]+)\/([^/]+)/) || []
 
-    return { url: repoURL.value, name: r(name), owner, branch }
+    return { url: repoURL.value, name: parse(name).name, owner, branch }
   })
 
   const getRepoMarkdown = async (onRequest: (key: string) => Promise<boolean>) => {
