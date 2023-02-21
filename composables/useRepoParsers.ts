@@ -1,14 +1,18 @@
-export const toKebabCase = (str: string) => {
-  str = str.replace(/[A-Z]/g, (item) => {
-    return `-${item.toLowerCase()}`
-  })
+import mapKeys from 'lodash.mapkeys'
 
-  if (str.startsWith('-')) { return str.substr(1) }
+const modules = import.meta.glob('~/utils/parsers/**/*.ts', { eager: true })
 
-  return str
+const parseFilenameFromURL = (path: string) => {
+  const url = new URL(path, 'http:/127.0.0.1')
+  const [filename] = url.pathname.split('/').pop()?.split('.') || []
+  return filename
 }
 
-export const useRepoParsers: Record<string, (api: string) => string> = {
-  'ant-design-vue': api => `components/${toKebabCase(api)}/index.en-US.md`,
-  nuxt: api => `docs/3.api/1.composables/${toKebabCase(api)}.md`
-}
+const parsers = mapKeys(modules, (_, key) => parseFilenameFromURL(key))
+
+export const useRepoParsers = () => ({
+  parsers (lib?: string, api?: string, version?: string) {
+    if (!lib || !api) { return }
+    return (parsers[lib] as any)?.default?.(api, version)
+  }
+})

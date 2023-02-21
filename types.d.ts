@@ -1,3 +1,8 @@
+enum Language {
+  ZH_CN = 'zh-CN',
+  EN_US = 'en-US'
+}
+
 interface UndocDoc {
   repo?: string
   link?: string

@@ -26,6 +26,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
   const repoURL = ref<string | undefined>()
   const md = ref('')
   const defaultBranch = ref('')
+  const { parsers } = useRepoParsers()
 
   const h5 = computed(() => mdit.render(md.value))
 
@@ -33,10 +34,9 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     if (!repoURL.value) { return {} }
 
     const branch = store.lib?.conf?.branch
-    const url = repoURL.value.match(/(https?|git|ssh):\/\/\S+/g)?.[0]
-    const [owner, name] = new URL(r(url)).pathname.split('/').filter(Boolean)
+    const [_, owner, name] = repoURL.value.match(/github\.com\/([^/]+)\/([^/]+)/) || []
 
-    return { url, name, owner, branch }
+    return { url: repoURL.value, name: r(name), owner, branch }
   })
 
   const getRepoMarkdown = async (onRequest: (key: string) => Promise<boolean>) => {
@@ -46,9 +46,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
         if (store.lib?.conf?.apis) { return store.lib?.conf?.apis?.[store.lib.selected] }
 
-        const parser = useRepoParsers?.[store.lib?.name]
-
-        return parser && parser(store.lib?.selected)
+        return parsers(store.lib?.name, store.lib?.selected)
       })()
 
       const { name, owner, branch } = repo.value

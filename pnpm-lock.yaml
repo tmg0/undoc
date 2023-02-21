@@ -7,6 +7,7 @@ specifiers:
   '@nuxtjs/tailwindcss': ^6.4.0
   '@pinia/nuxt': ^0.4.6
   '@types/glob': ^8.0.1
+  '@types/lodash.mapkeys': ^4.6.7
   '@types/markdown-it': ^12.2.3
   '@types/node': ^18.13.0
   '@vueuse/nuxt': ^9.12.0
@@ -14,6 +15,7 @@ specifiers:
   glob: ^8.1.0
   idb: ^7.1.1
   ignore: ^5.2.4
+  lodash.mapkeys: ^4.6.0
   markdown-it: ^13.0.1
   mlly: ^1.1.0
   nuxt: ^3.2.2
@@ -31,6 +33,7 @@ dependencies:
   glob: 8.1.0
   idb: 7.1.1
   ignore: 5.2.4
+  lodash.mapkeys: 4.6.0
   markdown-it: 13.0.1
   mlly: 1.1.0
   nuxt: 3.2.2_gj7lescvx3eofwrgztaceqogli
@@ -41,6 +44,7 @@ dependencies:
 devDependencies:
   '@nuxtjs/eslint-config-typescript': 12.0.0_7kw3g6rralp5ps6mg3uyzz6azm
   '@types/glob': 8.0.1
+  '@types/lodash.mapkeys': 4.6.7
   '@types/markdown-it': 12.2.3
   '@types/node': 18.13.0
   eslint: 8.34.0
@@ -1576,6 +1580,16 @@ packages:
 
   /@types/linkify-it/3.0.2:
     resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
+    dev: true
+
+  /@types/lodash.mapkeys/4.6.7:
+    resolution: {integrity: sha512-mfK0jlh4Itdhmy69/7r/vYftWaltahoS9kCF62UyvbDtXzMkUjuypaf2IASeoeoUPqBo/heoJSZ/vntbXC6LAA==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/markdown-it/12.2.3:
@@ -4889,6 +4903,10 @@ packages:
 
   /lodash.isplainobject/4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
+    dev: false
+
+  /lodash.mapkeys/4.6.0:
+    resolution: {integrity: sha512-0Al+hxpYvONWtg+ZqHpa/GaVzxuN3V7Xeo2p+bY06EaK/n+Y9R7nBePPN2o1LxmL0TWQSwP8LYZ008/hc9JzhA==}
     dev: false
 
   /lodash.memoize/4.1.2:
