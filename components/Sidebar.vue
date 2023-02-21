@@ -5,7 +5,7 @@ const emit = defineEmits(['select'])
 
 const store = useStore()
 
-const data = await $fetch('/api/used-apis', { method: 'POST' })
+const data = await $fetch('/api/used-apis')
 
 if (data) { store.cacheUsed(data) }
 </script>
