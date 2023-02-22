@@ -1,4 +1,4 @@
-import markdownit from 'markdown-it'
+
 import { parse } from 'pathe'
 
 interface Repo {
@@ -13,7 +13,7 @@ interface Props {
   hasLink: ComputedRef<string>
 }
 
-const mdit = markdownit({ html: true })
+const { mdit } = useMdit()
 
 export const useRepoH5 = ({ hasLink }: Props) => () => {
   const store = useStore()

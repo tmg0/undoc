@@ -4,7 +4,7 @@ const store = useStore()
 const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
-const { get, set } = useIDB()
+const { get, set } = useIdb()
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
 const { md, repoURL, docRef, defaultBranch, getRepoMarkdown } = useRepoH5({ hasLink })()
 

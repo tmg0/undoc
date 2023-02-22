@@ -5,7 +5,7 @@ export enum CacheStore {
   REPO_DOC_API = 'repo-doc-api'
 }
 
-export const useIDB = () => {
+export const useIdb = () => {
   const db = openDB('cache', 1, {
     upgrade (db) {
       db.createObjectStore(CacheStore.REPO_DOC_API)
