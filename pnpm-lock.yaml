@@ -12,9 +12,8 @@ specifiers:
   '@types/node': ^18.13.0
   '@vueuse/nuxt': ^9.12.0
   eslint: ^8.34.0
-  glob: ^8.1.0
-  h3-vee: ^0.0.1
-  highlight.js: ^11.7.0
+  fast-glob: ^3.2.12
+  h3-vee: ^0.0.3
   idb: ^7.1.1
   ignore: ^5.2.4
   lodash.mapkeys: ^4.6.0
@@ -31,9 +30,8 @@ dependencies:
   '@nuxtjs/tailwindcss': 6.4.0
   '@pinia/nuxt': 0.4.6_typescript@4.9.5
   '@vueuse/nuxt': 9.12.0_nuxt@3.2.2
-  glob: 8.1.0
-  h3-vee: 0.0.1
-  highlight.js: 11.7.0
+  fast-glob: 3.2.12
+  h3-vee: 0.0.3
   idb: 7.1.1
   ignore: 5.2.4
   lodash.mapkeys: 4.6.0
@@ -4161,11 +4159,12 @@ packages:
       duplexer: 0.1.2
     dev: false
 
-  /h3-vee/0.0.1:
-    resolution: {integrity: sha512-Fbwn2qaINabbSoM7A2gUsbaFgA9hld1yQlwnCfCI3K+hOh8U2hMiJsZMsLAL+aerFq1/phNknJttA1hNy1wi7A==}
+  /h3-vee/0.0.3:
+    resolution: {integrity: sha512-+B8tIRakjXesWsYWi8l4lBsh8mCP68RgVfhfOWaDXHqhVloybhMSuX93O5/8fW/iyfbeGlj7dcx6z0Gm/hmt/g==}
     dependencies:
       h3: 1.5.0
-      veelidate: 0.0.11
+      lodash.mapvalues: 4.6.0
+      veelidate: 0.0.13
     dev: false
 
   /h3/1.5.0:
@@ -4236,11 +4235,6 @@ packages:
     dependencies:
       capital-case: 1.0.4
       tslib: 2.5.0
-    dev: false
-
-  /highlight.js/11.7.0:
-    resolution: {integrity: sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==}
-    engines: {node: '>=12.0.0'}
     dev: false
 
   /hookable/5.4.2:
@@ -4921,6 +4915,10 @@ packages:
 
   /lodash.mapkeys/4.6.0:
     resolution: {integrity: sha512-0Al+hxpYvONWtg+ZqHpa/GaVzxuN3V7Xeo2p+bY06EaK/n+Y9R7nBePPN2o1LxmL0TWQSwP8LYZ008/hc9JzhA==}
+    dev: false
+
+  /lodash.mapvalues/4.6.0:
+    resolution: {integrity: sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==}
     dev: false
 
   /lodash.memoize/4.1.2:
@@ -7636,8 +7634,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /veelidate/0.0.11:
-    resolution: {integrity: sha512-LiiQQv/nsPO3vUa94Fv1JxynSsB9Ntldzvil1DRQ0QVjatruZYQr2o7VC1NcLsMOF5Jfixrd/PwSzCThse8e3g==}
+  /veelidate/0.0.13:
+    resolution: {integrity: sha512-JVSgizAYO+cOo08YB5JPbT6cYKIPxMaM6NYoWB95E+ALjyLTzXSAbuG8KFeHSe6kKIWpGoKGfS916ukg4emRCw==}
     dependencies:
       lodash.forin: 4.4.0
       lodash.setwith: 4.3.2

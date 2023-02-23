@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'fs'
 import { findExports, findStaticImports, parseStaticImport } from 'mlly'
 import { join, relative } from 'pathe'
 import ignore from 'ignore'
-import g from 'glob'
+import fg from 'fast-glob'
 import { asyncGetQuery } from 'h3-vee'
 
 const extraFiles = ['.nuxt/imports.d.ts']
@@ -28,7 +28,7 @@ const getIgnore = (path = '.') => {
 
 const getFilesInDirectory = (dirPath = '.') => {
   const pattern = join(process.cwd(), dirPath, '**/*.{js,ts,jsx,tsx,vue}')
-  const matches = g.sync(pattern, { dot: true, ignore: '**/node_modules/**' })
+  const matches = fg.sync(pattern, { dot: true, ignore: ['**/node_modules/**'] })
 
   const ig = getIgnore().filter(matches.map(match => relative('./', match)))
 
