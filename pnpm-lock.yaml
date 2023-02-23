@@ -9,17 +9,16 @@ specifiers:
   '@types/glob': ^8.0.1
   '@types/lodash.mapkeys': ^4.6.7
   '@types/markdown-it': ^12.2.3
-  '@types/markdown-it-container': ^2.0.5
   '@types/node': ^18.13.0
   '@vueuse/nuxt': ^9.12.0
   eslint: ^8.34.0
   glob: ^8.1.0
   h3-vee: ^0.0.1
+  highlight.js: ^11.7.0
   idb: ^7.1.1
   ignore: ^5.2.4
   lodash.mapkeys: ^4.6.0
   markdown-it: ^13.0.1
-  markdown-it-container: ^3.0.0
   mlly: ^1.1.0
   nuxt: ^3.2.2
   pathe: ^1.1.0
@@ -34,11 +33,11 @@ dependencies:
   '@vueuse/nuxt': 9.12.0_nuxt@3.2.2
   glob: 8.1.0
   h3-vee: 0.0.1
+  highlight.js: 11.7.0
   idb: 7.1.1
   ignore: 5.2.4
   lodash.mapkeys: 4.6.0
   markdown-it: 13.0.1
-  markdown-it-container: 3.0.0
   mlly: 1.1.0
   nuxt: 3.2.2_gj7lescvx3eofwrgztaceqogli
   pathe: 1.1.0
@@ -49,7 +48,6 @@ devDependencies:
   '@types/glob': 8.0.1
   '@types/lodash.mapkeys': 4.6.7
   '@types/markdown-it': 12.2.3
-  '@types/markdown-it-container': 2.0.5
   '@types/node': 18.13.0
   eslint: 8.34.0
   typescript: 4.9.5
@@ -1594,12 +1592,6 @@ packages:
 
   /@types/lodash/4.14.191:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
-    dev: true
-
-  /@types/markdown-it-container/2.0.5:
-    resolution: {integrity: sha512-8v5jIC5gcCUv+JcD0DExwNBkoKC0kLB4acensF0NoNlTIcXmQxF3RDjzAdIW82sXSoR+n772ePguxIWlq2ELvA==}
-    dependencies:
-      '@types/markdown-it': 12.2.3
     dev: true
 
   /@types/markdown-it/12.2.3:
@@ -4246,6 +4238,11 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /highlight.js/11.7.0:
+    resolution: {integrity: sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+
   /hookable/5.4.2:
     resolution: {integrity: sha512-6rOvaUiNKy9lET1X0ECnyZ5O5kSV0PJbtA5yZUgdEF7fGJEVwSLSislltyt7nFwVVALYHQJtfGeAR2Y0A0uJkg==}
     dev: false
@@ -5021,10 +5018,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       semver: 6.3.0
-    dev: false
-
-  /markdown-it-container/3.0.0:
-    resolution: {integrity: sha512-y6oKTq4BB9OQuY/KLfk/O3ysFhB3IMYoIWhGJEidXt1NQFocFK2sA2t0NYZAMyMShAGL6x5OPIbrmXPIqaN9rw==}
     dev: false
 
   /markdown-it/13.0.1:
