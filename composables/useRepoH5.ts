@@ -16,6 +16,7 @@ interface Props {
 const { mdit } = useMdit()
 
 export const useRepoH5 = ({ hasLink }: Props) => () => {
+  const { get, set } = useIdb()
   const store = useStore()
   const docRef = ref()
   const repoURL = ref<string | undefined>()
@@ -34,7 +35,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     return { url: repoURL.value, name: parse(name).name, owner, branch }
   })
 
-  const getRepoMarkdown = async (onRequest: (key: string) => Promise<boolean>) => {
+  const getRepoMarkdown = async () => {
     if (repoURL.value) {
       const filepath = (() => {
         if (!store.lib?.selected) { return store.lib?.conf?.readme }
@@ -47,11 +48,24 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
       const { name, owner, branch } = repo.value
       const query = { filepath, repo: name, owner, branch }
 
-      if (!(await onRequest(JSON.stringify(query)))) { return }
+      const storeKey = JSON.stringify(query)
+
+      const cache = await get(CacheStore.REPO_DOC_API, storeKey)
+
+      if (cache && cache.md) {
+        md.value = cache.md
+        defaultBranch.value = cache?.branch
+        return cache
+      }
 
       const data = await $fetch('/api/repo-doc', {
         query: { filepath, repo: name, owner, branch }
       })
+
+      set(CacheStore.REPO_DOC_API, data, storeKey)
+
+      md.value = data?.md
+      defaultBranch.value = data?.branch
 
       return data
     }

@@ -1,14 +1,16 @@
 import { openDB } from 'idb'
 
 export enum CacheStore {
-  GITHUB_API = 'github-api',
+  NPM_VIEW_API = 'npm-view-api',
   REPO_DOC_API = 'repo-doc-api'
 }
 
 export const useIdb = () => {
   const db = openDB('cache', 1, {
     upgrade (db) {
-      db.createObjectStore(CacheStore.REPO_DOC_API)
+      Object.values(CacheStore).forEach((store) => {
+        db.createObjectStore(store)
+      })
     }
   })
 

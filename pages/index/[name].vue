@@ -4,17 +4,13 @@ const store = useStore()
 const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
-const { get, set } = useIdb()
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
-const { md, repoURL, docRef, defaultBranch, getRepoMarkdown } = useRepoH5({ hasLink })()
+const { repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
 
 watch(() => [route.params, route.query], async ([params, query]) => {
   await store.selectLib(params.name as string, query.api as string)
 
   if (!store.lib) { return }
-
-  let cache: any
-  let key = ''
 
   lib.value = store.lib || {}
 
@@ -28,16 +24,7 @@ watch(() => [route.params, route.query], async ([params, query]) => {
 
   repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
-  const res = await getRepoMarkdown(async (k) => {
-    cache = await get(CacheStore.REPO_DOC_API, k)
-    key = k
-    return !cache
-  })
-
-  if (res) { set(CacheStore.REPO_DOC_API, res, key) }
-
-  md.value = res?.md || cache?.md || ''
-  defaultBranch.value = res?.branch || cache?.branch || ''
+  getRepoMarkdown()
 }, { immediate: true })
 
 </script>

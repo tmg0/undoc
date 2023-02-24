@@ -3,7 +3,6 @@ const router = useRouter()
 const store = useStore()
 
 store.getLibs()
-store.getUndocConf()
 
 const onSelect = ({ lib: name, api }: {
   lib: string
