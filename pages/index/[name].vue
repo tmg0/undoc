@@ -31,20 +31,7 @@ watch(() => [route.params, route.query], async ([params, query]) => {
 
 <template>
   <div class="flex flex-col h-full">
-    <div class="bg-gray-100/80 h-64 border-b border-gray-300/80 overflow-y-auto grid grid-cols-4 px-4 py-3 flex-shrink-0">
-      <NpmFieldItem label="Name" :value="lib.name" />
-      <NpmFieldItem label="Author" :value="lib.npm?.author" />
-
-      <NpmFieldItem label="Engines">
-        <div v-for="([key, value]) in Object.entries((lib.npm?.engines) || {})" :key="key">
-          {{ key + value }}
-        </div>
-      </NpmFieldItem>
-
-      <NpmFieldItem label="Homepage" :value="lib.npm?.homepage" />
-      <NpmFieldItem label="License" :value="lib.npm?.license" />
-      <NpmFieldItem label="Repository" :value="lib.npm?.repository?.url" />
-    </div>
+    <NpmFloatBtn class="fixed bottom-6 right-8" />
 
     <div class="flex-1 overflow-y-auto">
       <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />

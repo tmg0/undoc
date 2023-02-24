@@ -6,7 +6,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div>
+  <div v-if="value">
     <div class="text-gray-500/80">
       {{ label }}
     </div>

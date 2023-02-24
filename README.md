@@ -25,13 +25,14 @@ Undoc use indexedDB to cache repo markdown file content, please use the latest v
 ## Features
 
 - Monorepo workspace dependencies
-- Custom undoc config
 - Custom repo doc filepath parser
 - Dynamic server port
 - More lib doc support
 - Friendly ui
 - Current project info overview
 - Homepage link
+- Manual refresh npm / repo doc info
+- Get version from locale node_modules
 
 ## License
 [MIT](./LICENSE)
