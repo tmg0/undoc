@@ -5,6 +5,7 @@ export interface PackageJSON extends Record<string, any> {
 }
 
 export interface StoreState {
+  curr?: Partial<PackageJSON>
   undocConf?: UndocConfig
   libs: Record<string, Lib>
   lib?: Lib
@@ -12,6 +13,7 @@ export interface StoreState {
 
 export const useStore = defineStore('store', {
   state: (): StoreState => ({
+    curr: undefined,
     undocConf: undefined,
     lib: undefined,
     libs: {}
@@ -33,7 +35,9 @@ export const useStore = defineStore('store', {
         if (name.includes('@types')) { return }
         return { name, version, used: this.libs[name]?.used || [] }
       })
+
       this.libs = { ...this.libs, ...result }
+      this.curr = { ...json }
     },
 
     async selectLib (name: string, api?: string) {
