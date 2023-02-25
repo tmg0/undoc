@@ -15,6 +15,10 @@ interface Props {
 
 const { mdit } = useMdit()
 
+export enum TagName {
+  PRE = 'PRE'
+}
+
 export const useRepoH5 = ({ hasLink }: Props) => () => {
   const { get, set } = useIdb()
   const store = useStore()
@@ -85,6 +89,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     await nextTick()
 
     const imgs = shadowRoot.querySelectorAll('img')
+    const codes = shadowRoot.querySelectorAll('code')
 
     for (let i = 0; i < imgs.length; i++) {
       const url: string = imgs[i].src
@@ -93,6 +98,19 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
         const { owner, name, branch: confBranch } = repo.value
         const branch = confBranch || defaultBranch.value
         imgs[i].src = url.replace(/(.*?)(_undoc)/, `https://github.com/${owner}/${name}/raw/${branch}`)
+      }
+    }
+
+    for (let i = 0; i < codes.length; i++) {
+      const pre = codes[i]?.parentNode || codes[i]?.parentElement
+
+      if (!pre) { continue }
+      if (pre.tagName?.toUpperCase() === TagName.PRE) {
+        pre.style.background = '#f6f8fa'
+        pre.style.color = '#24292f'
+        pre.style.padding = '16px'
+        pre.style.fontSize = '85%'
+        pre.style.borderRadius = '8px'
       }
     }
   })

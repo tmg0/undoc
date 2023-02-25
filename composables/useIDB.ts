@@ -28,7 +28,7 @@ export const useIdb = () => {
     del(store, key)
   }
 
-  const set = async (store: CacheStore, value: any, key: string, expire: number = 1000 * 60 * 60) => {
+  const set = async (store: CacheStore, value: any, key: string, expire: number = 1000 * 60 * 60 * 12) => {
     if (!db) { return '' }
 
     return await (await db).put(store, {

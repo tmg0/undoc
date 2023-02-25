@@ -35,7 +35,7 @@ watch(() => [route.params, route.query], async ([params, query]) => {
 
     <div class="flex-1 overflow-y-auto">
       <iframe v-if="hasLink" :src="frameSrc" frameborder="0" class="w-full h-full" />
-      <div v-if="!hasLink" ref="docRef" class="w-full h-full px-4 py-3 box-border " />
+      <div v-if="!hasLink" ref="docRef" class="w-full h-full px-4 box-border" />
     </div>
   </div>
 </template>
