@@ -84,7 +84,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
     const shadowRoot = shadow.shadowRoot || shadow.attachShadow({ mode: 'open' })
 
-    shadowRoot.innerHTML = value
+    shadowRoot.innerHTML = value + '<style>a { text-decoration: none }</style>'
 
     await nextTick()
 
@@ -111,6 +111,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
         pre.style.padding = '16px'
         pre.style.fontSize = '85%'
         pre.style.borderRadius = '8px'
+        pre.style.maxWidth = '1280px'
       }
     }
   })
