@@ -5,7 +5,7 @@ const lib = ref<Partial<Lib>>({})
 const frameSrc = ref('')
 
 const { hasLink, hasRepo, getNpmView } = useNpmView({ lib })()
-const { repoURL, docRef, getRepoMarkdown } = useRepoH5({ hasLink })()
+const { repoURL, docRef, getRepoDoc } = useRepoH5({ hasLink })()
 
 watch(() => [route.params, route.query], async ([params, query]) => {
   await store.selectLib(params.name as string, query.api as string)
@@ -24,7 +24,7 @@ watch(() => [route.params, route.query], async ([params, query]) => {
 
   repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
-  getRepoMarkdown()
+  getRepoDoc()
 }, { immediate: true })
 
 </script>

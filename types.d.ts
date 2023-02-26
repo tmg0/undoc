@@ -58,3 +58,18 @@ interface GithubContent {
   encoding: 'base64'
   _links: Record<string, string>
 }
+
+interface UnghContents {
+  meta: {
+    url: string
+  }
+  file: {
+    contents: string
+    html: string
+  }
+}
+
+interface UnghDefaultReadme {
+  html: string
+  markdown: string
+}

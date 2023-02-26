@@ -1,5 +1,5 @@
 {
-  "nuxt.isNuxtApp": true,
+  "nuxt.isNuxtApp": false,
   "prettier.enable": false,
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {

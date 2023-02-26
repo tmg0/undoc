@@ -1,8 +1,10 @@
+/* eslint-disable no-useless-catch */
 import { asyncGetQuery } from 'h3-vee'
 
-const githubAPI = 'https://api.github.com'
+export const githubAPI = 'https://api.github.com'
+export const unghAPI = 'https://ungh.cc'
 
-const getRepoByGithubAPI = async (owner: string, repo: string) => {
+export const getRepoByGithubAPI = async (owner: string, repo: string) => {
   const data: { default_branch: string } = await $fetch(`${githubAPI}/repos/${owner}/${repo}`)
   return data
 }
@@ -20,12 +22,8 @@ export default defineEventHandler(async (event) => {
 
     const branch = query.branch || (await getRepoByGithubAPI(query.owner, query.repo)).default_branch
 
-    const url = `${githubAPI}/repos/${query.owner}/${query.repo}/contents/${filepath}?ref=${branch}`
-
-    const md: GithubContent = await $fetch(url)
-
-    const file = Buffer.from(md.content, 'base64').toString()
-
-    return { md: file, branch }
-  } catch (error) { throw new Error(String(error)) }
+    const url = `${unghAPI}/repos/${query.owner}/${query.repo}/files/${branch}/${filepath}`
+    const data: UnghContents = await $fetch(url)
+    return { html: data.file.html, branch }
+  } catch (error) { throw error }
 })

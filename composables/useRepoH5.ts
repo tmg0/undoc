@@ -13,8 +13,6 @@ interface Props {
   hasLink: ComputedRef<string>
 }
 
-const { mdit } = useMdit()
-
 export enum TagName {
   PRE = 'PRE'
 }
@@ -24,11 +22,9 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
   const store = useStore()
   const docRef = ref()
   const repoURL = ref<string | undefined>()
-  const md = ref('')
+  const h5 = ref('')
   const defaultBranch = ref('')
   const { parsers } = useRepoParsers()
-
-  const h5 = computed(() => mdit.render(md.value))
 
   const repo = computed<Partial<Repo>>(() => {
     if (!repoURL.value) { return {} }
@@ -39,7 +35,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     return { url: repoURL.value, name: parse(name).name, owner, branch }
   })
 
-  const getRepoMarkdown = async () => {
+  const getRepoDoc = async () => {
     if (repoURL.value) {
       const filepath = (() => {
         if (!store.lib?.selected) { return store.lib?.conf?.readme }
@@ -56,8 +52,8 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
       const cache = await get(CacheStore.REPO_DOC_API, storeKey)
 
-      if (cache && cache.md) {
-        md.value = cache.md
+      if (cache && cache.html) {
+        h5.value = cache.html
         defaultBranch.value = cache?.branch
         return cache
       }
@@ -68,7 +64,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
       set(CacheStore.REPO_DOC_API, data, storeKey)
 
-      md.value = data?.md
+      h5.value = data?.html
       defaultBranch.value = data?.branch
 
       return data
@@ -88,18 +84,7 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
     await nextTick()
 
-    const imgs = shadowRoot.querySelectorAll('img')
     const codes = shadowRoot.querySelectorAll('code')
-
-    for (let i = 0; i < imgs.length; i++) {
-      const url: string = imgs[i].src
-
-      if (url.includes('_undoc')) {
-        const { owner, name, branch: confBranch } = repo.value
-        const branch = confBranch || defaultBranch.value
-        imgs[i].src = url.replace(/(.*?)(_undoc)/, `https://github.com/${owner}/${name}/raw/${branch}`)
-      }
-    }
 
     for (let i = 0; i < codes.length; i++) {
       const pre = codes[i]?.parentNode || codes[i]?.parentElement
@@ -116,5 +101,5 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     }
   })
 
-  return { md, h5, repo, repoURL, docRef, defaultBranch, getRepoMarkdown }
+  return { h5, repo, repoURL, docRef, defaultBranch, getRepoDoc }
 }
