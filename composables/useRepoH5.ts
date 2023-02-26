@@ -84,20 +84,19 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
     await nextTick()
 
-    const codes = shadowRoot.querySelectorAll('code')
+    const codes = shadowRoot.querySelectorAll('.highlight')
 
     for (let i = 0; i < codes.length; i++) {
-      const pre = codes[i]?.parentNode || codes[i]?.parentElement
+      const code = codes[i]
 
-      if (!pre) { continue }
-      if (pre.tagName?.toUpperCase() === TagName.PRE) {
-        pre.style.background = '#f6f8fa'
-        pre.style.color = '#24292f'
-        pre.style.padding = '16px'
-        pre.style.fontSize = '85%'
-        pre.style.borderRadius = '8px'
-        pre.style.maxWidth = '1280px'
-      }
+      if (!code) { continue }
+
+      code.style.background = '#f6f8fa'
+      code.style.color = '#24292f'
+      code.style.padding = '4px 16px'
+      code.style.fontSize = '85%'
+      code.style.borderRadius = '8px'
+      code.style.maxWidth = '1280px'
     }
   })
 
