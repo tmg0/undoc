@@ -32,7 +32,6 @@
     "ignore": "^5.2.4",
     "lodash.mapkeys": "^4.6.0",
     "lodash.merge": "^4.6.2",
-    "markdown-it": "^13.0.1",
     "mlly": "^1.1.0",
     "nuxt": "^3.2.2",
     "pathe": "^1.1.0",
@@ -43,7 +42,6 @@
     "@types/glob": "^8.0.1",
     "@types/lodash.mapkeys": "^4.6.7",
     "@types/lodash.merge": "^4.6.7",
-    "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.13.0",
     "eslint": "^8.34.0",
     "typescript": "^4.9.5"
