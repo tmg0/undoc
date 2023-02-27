@@ -1,10 +1,9 @@
-import fs from 'node:fs'
-import { resolvePath } from 'mlly'
+import fse from 'fs-extra'
+import { join } from 'pathe'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(() => {
   try {
-    const path = await resolvePath('./package.json', { url: process.cwd() })
-    const json = fs.readFileSync(path).toString()
-    return JSON.parse(json)
+    const path = join(process.cwd(), 'package.json')
+    return fse.readJsonSync(path)
   } catch (error) { return { error } }
 })
