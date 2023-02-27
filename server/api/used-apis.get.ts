@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { findExports, findStaticImports, parseStaticImport } from 'mlly'
 import { join, relative } from 'pathe'
 import ignore from 'ignore'
