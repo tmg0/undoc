@@ -8,7 +8,7 @@ const onSelect = ({ lib: name, api }: {
   lib: string
   api?: string
 }) => {
-  router.push({ name: 'index-name', params: { name }, query: { api } })
+  router.push({ name: '_undoc-name', params: { name }, query: { api } })
 }
 </script>
 

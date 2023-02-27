@@ -18,7 +18,7 @@ Start server ( under target node project dir )
 undoc
 ```
 
-Server will start at port 3000, open the browser and view `127.0.0.1:3000/_undoc`.
+Server will start at port 3000, open the browser and view `127.0.0.1:3000`.
 
 Undoc use indexedDB to cache repo markdown file content, please use the latest version of chrome / firefox.
 
