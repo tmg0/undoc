@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
+import fse from 'fs-extra'
 import { findExports, findStaticImports, parseStaticImport } from 'mlly'
 import { join, relative } from 'pathe'
 import ignore from 'ignore'
@@ -37,7 +38,7 @@ const getFilesInDirectory = (dirPath = '.') => {
 
 const getAutoImports = () => {
   return extraFiles.map((path) => {
-    if (existsSync(path)) {
+    if (fse.pathExistsSync(path)) {
       return readFileSync(path).toString()
     }
     return ''
