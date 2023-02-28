@@ -44,7 +44,7 @@ watch(() => [route.params, route.query], () => {
   <div class="flex flex-col h-full">
     <div class="fixed bottom-6 right-8 flex flex-col gap-4">
       <NpmFloatBtn />
-      <RefreshFloatBtn @refresh="onRefresh" />
+      <RefreshFloatBtn :refresh="onRefresh" />
     </div>
 
     <div class="flex-1 overflow-y-auto">

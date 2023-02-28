@@ -28,13 +28,11 @@ export const useNpmView = ({ lib }: Props) => () => {
       return cache
     }
 
-    if (!store.libs[store.lib.name]?.npm) {
-      const npmView = await $fetch('/api/npm-view', { query: query.value })
+    const npmView = await $fetch('/api/npm-view', { query: query.value })
 
-      store.cacheLib(store.lib.name, npmView)
-      set(CacheStore.NPM_VIEW_API, npmView, storeKey.value)
-      lib.value = store.lib
-    }
+    store.cacheLib(store.lib.name, npmView)
+    set(CacheStore.NPM_VIEW_API, npmView, storeKey.value)
+    lib.value = store.lib
   }
 
   return { hasLink, hasRepo, frameSrc, storeKey, getNpmView }
