@@ -35,22 +35,25 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     return { url: repoURL.value, name: parse(name).name, owner, branch }
   })
 
+  const query = computed(() => {
+    const filepath = (() => {
+      if (!store.lib?.selected) { return store.lib?.conf?.readme }
+
+      if (store.lib?.conf?.apis) { return store.lib?.conf?.apis?.[store.lib.selected] }
+
+      return parsers(store.lib?.name, store.lib?.selected)
+    })()
+
+    const { name, owner, branch } = repo.value
+
+    return { filepath, repo: name, owner, branch }
+  })
+
+  const storeKey = computed(() => JSON.stringify(query.value))
+
   const getRepoDoc = async () => {
     if (repoURL.value) {
-      const filepath = (() => {
-        if (!store.lib?.selected) { return store.lib?.conf?.readme }
-
-        if (store.lib?.conf?.apis) { return store.lib?.conf?.apis?.[store.lib.selected] }
-
-        return parsers(store.lib?.name, store.lib?.selected)
-      })()
-
-      const { name, owner, branch } = repo.value
-      const query = { filepath, repo: name, owner, branch }
-
-      const storeKey = JSON.stringify(query)
-
-      const cache = await get(CacheStore.REPO_DOC_API, storeKey)
+      const cache = await get(CacheStore.REPO_DOC_API, storeKey.value)
 
       if (cache && cache.html) {
         h5.value = cache.html
@@ -58,11 +61,9 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
         return cache
       }
 
-      const data = await $fetch('/api/repo-doc', {
-        query: { filepath, repo: name, owner, branch }
-      })
+      const data = await $fetch('/api/repo-doc', { query: query.value })
 
-      set(CacheStore.REPO_DOC_API, data, storeKey)
+      set(CacheStore.REPO_DOC_API, data, storeKey.value)
 
       h5.value = data?.html
       defaultBranch.value = data?.branch
@@ -100,5 +101,5 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
     }
   })
 
-  return { h5, repo, repoURL, docRef, defaultBranch, getRepoDoc }
+  return { h5, repo, repoURL, docRef, defaultBranch, storeKey, getRepoDoc }
 }
