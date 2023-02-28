@@ -1,6 +1,6 @@
 {
   "name": "undoc",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "license": "MIT",
   "bin": {
     "undoc": ".output/server/index.mjs"
@@ -21,11 +21,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/carbon": "^1.1.15",
-    "@nuxt-themes/typography": "^0.8.0",
-    "@nuxtjs/tailwindcss": "^6.4.0",
-    "@pinia/nuxt": "^0.4.6",
-    "@vueuse/nuxt": "^9.12.0",
+    
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.0",
     "h3-vee": "^0.0.3",
@@ -35,10 +31,17 @@
     "lodash.merge": "^4.6.2",
     "mlly": "^1.1.0",
     "pathe": "^1.1.0",
-    "ufo": "^1.1.1",
-    "unplugin-icons": "^0.15.3"
+    "ufo": "^1.1.1"
+   
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.15",
+    "@nuxt-themes/typography": "^0.8.0",
+    "@nuxtjs/tailwindcss": "^6.4.0",
+    "@pinia/nuxt": "^0.4.6",
+    "@vueuse/nuxt": "^9.12.0",
+    "unplugin-icons": "^0.15.3",
+
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@types/fs-extra": "^11.0.1",
     "@types/glob": "^8.0.1",
