@@ -1,6 +1,6 @@
 {
   "name": "undoc",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "license": "MIT",
   "bin": {
     "undoc": ".output/server/index.mjs"
@@ -21,11 +21,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/carbon": "^1.1.15",
-    "@nuxt-themes/typography": "^0.8.0",
-    "@nuxtjs/tailwindcss": "^6.4.0",
-    "@pinia/nuxt": "^0.4.6",
-    "@vueuse/nuxt": "^9.12.0",
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.0",
     "h3-vee": "^0.0.3",
@@ -34,19 +29,24 @@
     "lodash.mapkeys": "^4.6.0",
     "lodash.merge": "^4.6.2",
     "mlly": "^1.1.0",
-    "nuxt": "^3.2.2",
-    "pathe": "^1.1.0",
-    "unplugin-icons": "^0.15.3"
+    "pathe": "^1.1.0"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.16",
+    "@nuxt-themes/typography": "^0.9.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@nuxtjs/tailwindcss": "^6.4.1",
+    "@pinia/nuxt": "^0.4.7",
     "@types/fs-extra": "^11.0.1",
     "@types/glob": "^8.0.1",
     "@types/lodash.mapkeys": "^4.6.7",
     "@types/lodash.merge": "^4.6.7",
     "@types/node": "^18.13.0",
+    "@vueuse/nuxt": "^9.13.0",
     "eslint": "^8.34.0",
-    "typescript": "^4.9.5"
+    "nuxt": "^3.2.3",
+    "typescript": "^4.9.5",
+    "unplugin-icons": "^0.15.3"
   },
   "volta": {
     "node": "19.7.0"
