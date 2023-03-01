@@ -22,16 +22,21 @@ const mapValues = <T>(object: Record<string, T>, iteratee: (value: T, key: strin
   return result
 }
 
-const getIgnore = (path = '.') => {
-  const file = readFileSync(join(process.cwd(), path, '.gitignore'), 'utf8')
+const getIgnore = async (path = '.') => {
+  path = join(process.cwd(), path, '.gitignore')
+  const exist = await fse.pathExists(path)
+
+  if (!exist) { return ignore() }
+
+  const file = readFileSync(path, 'utf8')
   return ignore().add(file)
 }
 
-const getFilesInDirectory = (dirPath = '.') => {
+const getFilesInDirectory = async (dirPath = '.') => {
   const pattern = join(process.cwd(), dirPath, '**/*.{js,ts,jsx,tsx,vue}')
   const matches = fg.sync(pattern, { dot: true, ignore: ['**/node_modules/**'] })
 
-  const ig = getIgnore().filter(matches.map(match => relative('./', match)))
+  const ig = (await getIgnore()).filter(matches.map(match => relative('./', match)))
 
   return ig.map(filePath => readFileSync(filePath).toString())
 }
@@ -51,7 +56,7 @@ export default defineEventHandler(async (event) => {
       path: f().isString()
     }))
     const result: Record<string, string[]> = {}
-    const files = getFilesInDirectory(query.path as string)
+    const files = await getFilesInDirectory(query.path as string)
 
     files.forEach((file) => {
       findStaticImports(file).map(parseStaticImport).forEach(({ specifier, namedImports }) => {
