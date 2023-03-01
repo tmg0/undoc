@@ -22,8 +22,23 @@ const onRefresh = () => {
         class="shadow-lg shadow-[#32475b]/50 rounded-full p-4 cursor-pointer bg-[#32475b] transition-all"
         @click="onRefresh"
       >
-        <Renew class="text-2xl text-white" />
+        <Renew class="text-2xl text-white" :class="{ spinning: pending }" />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+</style>

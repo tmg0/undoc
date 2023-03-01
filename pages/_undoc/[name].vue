@@ -23,7 +23,7 @@ const setup = async (name = route.params.name, api = route.query.api) => {
 
   repoURL.value = hasRepo.value ? lib.value.conf?.repo : lib.value.npm?.repository?.url
 
-  getRepoDoc()
+  await getRepoDoc()
 }
 
 const onRefresh = async () => {
@@ -31,7 +31,7 @@ const onRefresh = async () => {
     del(CacheStore.NPM_VIEW_API, npmStoreKey.value),
     del(CacheStore.REPO_DOC_API, gitStoraKey.value)
   ])
-  setup()
+  await setup()
 }
 
 watch(() => [route.params, route.query], () => {

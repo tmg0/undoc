@@ -18,13 +18,13 @@ const isSelected = (name: string, api?: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full border-r border-gray-300/80 select-none" :style="{ width: '350px' }">
+  <div class="flex flex-col h-full text-sm border-r border-gray-300/80 select-none" :style="{ width: '350px' }">
     <NarBar />
 
     <div class="flex-1 px-4 py-3 overflow-y-auto">
       <details v-for="({ name, version, used }) in Object.values(store.libs)" :key="name" class="my-0.5">
         <summary
-          class="flex w-full items-center justify-between cursor-pointer gap-1 hover:bg-gray-100 rounded pl-1 pr-3"
+          class="flex w-full items-center justify-between cursor-pointer gap-1 hover:bg-gray-100 rounded pl-1 py-px pr-3"
           :class="{ 'bg-gray-100': !used.length && isSelected(name) }"
           @click="!used.length && emit('select', { lib: name })"
         >
@@ -38,7 +38,7 @@ const isSelected = (name: string, api?: string) => {
             </div>
           </div>
 
-          <div class="bg text-sm text-gray-500/50">
+          <div class="bg  text-gray-500/50">
             {{ version }}
           </div>
         </summary>
@@ -47,7 +47,7 @@ const isSelected = (name: string, api?: string) => {
           <div
             v-for="item in used"
             :key="item"
-            class="cursor-pointer hover:bg-gray-100 rounded px-3 my-0.5"
+            class="cursor-pointer hover:bg-gray-100 rounded px-3 py-px my-0.5"
             :class="{ 'bg-gray-100': isSelected(name, item) }"
             @click="emit('select', { lib: name, api: item })"
           >
