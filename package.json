@@ -8,7 +8,6 @@
   "files": [
     "undoc.config.json",
     "nuxt.config.ts",
-    ".nuxt",
     ".output",
     "LICENSE",
     "README.md"
