@@ -13,6 +13,10 @@
     "LICENSE",
     "README.md"
   ],
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build"
+  },
   "dependencies": {
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.0",

@@ -6,11 +6,13 @@ import Link from '~icons/carbon/link'
 const visible = ref(false)
 const store = useStore()
 
+const hasNpm = computed(() => !!store?.lib?.npm)
 const engines = computed(() => Object.entries((store?.lib?.npm?.engines) || {}))
 const homepage = computed(() => store?.lib?.npm?.homepage)
 const repoURL = computed(() => store?.lib?.npm?.repository?.url)
 
 const onToggle = () => {
+  if (!hasNpm.value) { return }
   visible.value = !visible.value
 }
 </script>
@@ -20,6 +22,7 @@ const onToggle = () => {
     <div class="relative">
       <div
         class="shadow-lg shadow-[#ce3736]/50 rounded-full p-4 cursor-pointer bg-[#ce3736] transition-all"
+        :class="{ 'bg-black/25': !hasNpm, 'shadow-black/20': !hasNpm }"
         @click="onToggle"
       >
         <LogoNpm class="text-2xl text-white" />
