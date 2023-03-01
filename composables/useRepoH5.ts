@@ -87,6 +87,17 @@ export const useRepoH5 = ({ hasLink }: Props) => () => {
 
     const codes = shadowRoot.querySelectorAll('.highlight')
     const imgs = shadowRoot.querySelectorAll('img')
+    const links = shadowRoot.querySelectorAll('a:not(.anchor)')
+
+    for (let i = 0; i < links.length; i++) {
+      const href: string = links[i].href
+
+      if (href.includes('_undoc')) {
+        const { owner, repo, branch: confBranch } = query.value
+        const branch = confBranch || defaultBranch.value
+        links[i].href = href.replace(/(.*?)(_undoc)/, `https://github.com/${owner}/${repo}/blob/${branch}`)
+      }
+    }
 
     for (let i = 0; i < imgs.length; i++) {
       const url: string = imgs[i].src
