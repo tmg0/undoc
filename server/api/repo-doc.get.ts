@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
   const filepath = query.filepath || 'README.md'
 
   try {
+    if (filepath || query.branch) { throw new Error() }
     const url = `${unghAPI}/repos/${query.owner}/${query.repo}/readme`
     const data: UnghDefaultReadme = await $fetch(url)
     return { html: data.html, branch: 'main' }
