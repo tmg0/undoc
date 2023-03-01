@@ -1,6 +1,6 @@
 {
   "name": "undoc",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "license": "MIT",
   "bin": {
     "undoc": ".output/server/index.mjs"
@@ -29,6 +29,7 @@
     "lodash.mapkeys": "^4.6.0",
     "lodash.merge": "^4.6.2",
     "mlly": "^1.1.0",
+    "nuxt": "^3.2.3",
     "pathe": "^1.1.0"
   },
   "devDependencies": {
@@ -44,7 +45,6 @@
     "@types/node": "^18.13.0",
     "@vueuse/nuxt": "^9.13.0",
     "eslint": "^8.34.0",
-    "nuxt": "^3.2.3",
     "typescript": "^4.9.5",
     "unplugin-icons": "^0.15.3"
   },
