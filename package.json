@@ -13,6 +13,9 @@
     "LICENSE",
     "README.md"
   ],
+  "scripts": {
+    "dev": "nuxt dev"
+  },
   "dependencies": {
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.0",
@@ -23,7 +26,8 @@
     "lodash.mapkeys": "^4.6.0",
     "lodash.merge": "^4.6.2",
     "mlly": "^1.1.0",
-    "pathe": "^1.1.0"
+    "pathe": "^1.1.0",
+    "scule": "^1.0.0"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.16",
